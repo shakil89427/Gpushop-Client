@@ -1,0 +1,147 @@
+.title {
+  font-weight: 800;
+}
+.h-btn{
+  border: none;
+  background: none;
+  font-size: 1.3em;
+}
+.banner {
+  background-image: url(https://cdn.mos.cms.futurecdn.net/GJ98stg6BUV9SraDkDstbJ.jpg);
+  background-size: cover;
+  background-repeat: none;
+  background-position: center center;
+  min-height: 450px;
+}
+.banner-form {
+  border: 1px solid rgb(75, 176, 243);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.171);
+}
+.banner-input {
+  width: 75%;
+  border: none;
+  outline: none;
+  padding-left: 10px;
+  background: none;
+  color: aliceblue;
+}
+.banner-btn {
+  width: 25%;
+  border: none;
+  border-left: 1px solid rgb(75, 176, 243);
+  border-radius: 15px;
+  padding: 5px;
+  outline: none;
+  background: none;
+  color: white;
+}
+.connect-h1 {
+  background-color: rgb(58, 29, 9);
+}
+i {
+  color: rgba(238, 80, 80, 0.801);
+  font-size: 3em;
+  border: 1px solid rgba(238, 80, 80, 0.801);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  text-align: center;
+  padding-top: 5px;
+}
+i:hover {
+  color: green;
+  border-color: green;
+}
+.allproducts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+}
+.pr-img,.up-img{
+  height: 150px;
+  width: 150px;
+}
+.product{
+  height: 350px;
+  border: 1px solid grey;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
+.buy-btn{
+  width: 100%;
+  padding: 5px;
+  border: none;
+  background: rgba(2, 171, 250, 0.521);
+}
+.upcoming{
+  overflow-y: scroll;
+  height: 750px;
+}
+.review-div{
+  display: grid;
+  grid-template-columns: repeat(1fr);
+  grid-gap: 10px;
+  height: 283px;
+  background-color: rgba(213, 238, 247, 0.26);
+  overflow-y: scroll;
+}
+.subscribe{
+  background-color: rgba(0, 255, 0, 0.151);
+}
+.sub-input{
+  width: 350px;
+  margin: 10px;
+  padding: 3px 10px;
+  text-align: center;
+}
+.sub-button{
+  width: 100px;
+  height: 30px;
+  margin: 5px;
+  background-color: magenta;
+  color: white;
+  border: none;
+}
+.footer{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  grid-gap: 30px;
+  background-color: rgba(185, 180, 180, 0.267);
+}
+.footer h4{
+  border-bottom: 2px solid black;
+}
+.single-img{
+  width: 300px;
+  height: 300px;
+}
+.s-btn{
+  width: 150px;
+  border: 1px solid grey;
+  margin: 5px;
+  padding: 5px;
+  background-color: tomato;
+  color: white;
+}
+.form{
+  width: 50%;
+  background-color: rgba(216, 191, 216, 0.336);
+  margin: auto;
+  text-align: center;
+  padding: 5%;
+}
+.form input{
+  background: none;
+  margin: 10px;
+  width: 250px;
+  outline: none;
+  border: 1px solid grey;
+}
+.logreg{
+  background: none;
+  margin: 10px;
+  width: 250px;
+  outline: none;
+  border: 1px solid grey;
+}
