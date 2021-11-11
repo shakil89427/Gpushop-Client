@@ -1,38 +1,70 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
 import useAuth from '../AuthProvider/useAuth';
 
 const Pay = () => {
-    const [product,setProduct] = useState({})
+    const [products,setProducts] = useState([])
+    const [price,setprice] = useState()
+    const [quantity,setquantity] = useState()
     const {user} = useAuth();
-    const {id} = useParams()
 
-    const onBlur= e =>{
-        const field = e.target.name
-        const value = e.target.value
-        const info = {...product}
-    }
-
-    const placeOrder= e =>{
-        e.preventDefault()
-    }
+    const loadData = () =>{
+        axios.get(`http://localhost:5000/allcart/${user.uid}`)
+        .then(res=>setProducts(res.data))
+    };
+    const calculate = () =>{
+        let gprice = 0;
+        let gquantity = 0;
+        for(const product of products){
+            const newprice = product.price*product.quantity
+            gprice=gprice+newprice
+            gquantity=gquantity+product.quantity
+        }
+        setprice(gprice)
+        setquantity(gquantity)
+    };
     useEffect(()=>{
-        axios.get(`http://localhost:5000/details/${id}`)
-        .then(res=>setProduct(res.data))
-    },[])
+        loadData()
+    },[]);
+
+    useEffect(()=>{
+        calculate()
+    },[products]);
+
+    const remove = id =>{
+        axios.delete(`http://localhost:5000/deletefromcart/${id}?uid=${user.uid}`)
+        .then(res=>{
+            if(res.data.deletedCount){
+                loadData()
+            }
+        })
+    }
     return (
-        <div>
-            <h1 className='connect-h1 text-white text-center'>Please Fill All Details</h1>
-            <form onSubmit={placeOrder} className='form'>
-                <input onBlur={onBlur} value={user.displayName} type="text" name='username' required placeholder='Enter your name'/>
-                <br />
-                <input onBlur={onBlur} value={user.email} type="email" name='useremail' required placeholder='Enter your Email'/>
-                <br />
-                <input onBlur={onBlur} type="text" name='usereaddress' required placeholder='Enter your Address'/>
-                <br />
-                <button type='submit' className='s-btn'>Place Order</button>
-            </form>
+        <div className='w-75 mx-auto my-3'>
+            <h1 className='connect-h1 text-white text-center'>Checkout</h1>
+            <div className="row ">
+                <div className="col-8 py-5">
+                    {
+                        products.length===0 && <p className='text-center text-danger'>You dont have added any product</p>
+                    }
+                    {
+                        products.map(product=> <div key={product._id} className="me-5 border-bottom d-flex align-items-center">
+                            <img className='pay-img' src={product.img} alt="" />
+                            <div className="ms-2">
+                            <h4>{product.name}</h4>
+                            <h5>Quantity: {product.quantity}</h5>
+                            <h5>Price: {product.price}</h5>
+                            <button onClick={()=>remove(product._id)} className='s-btn'>Remove</button>
+                            </div>
+                        </div> )
+                    }
+                </div>
+                <div className="col-4 text-center py-5">
+                    <h5>Total Price: {price}</h5>
+                    <h5>Total Items: {quantity}</h5>
+                    <button className='s-btn'>Place order</button>
+                </div>
+            </div>
         </div>
     );
 };

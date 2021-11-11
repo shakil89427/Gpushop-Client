@@ -2,44 +2,17 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 const Sidepart = () => {
-
-  const data = [
-    {
-        name:'Shakil',
-        review: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi sit fugit aliquam quasi rem totam tenetur ipsum mollitia iure, odit libero ab consequatur blanditiis voluptatem quos atque ullam eveniet neque?',
-        rating: 5
-    },
-    {
-        name:'Ahmed',
-        review: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi sit fugit aliquam quasi rem totam tenetur ipsum mollitia iure, odit libero ab consequatur blanditiis voluptatem quos atque ullam eveniet neque?',
-        rating: 5
-    },
-    {
-        name:'Ahmed',
-        review: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi sit fugit aliquam quasi rem totam tenetur ipsum mollitia iure, odit libero ab consequatur blanditiis voluptatem quos atque ullam eveniet neque?',
-        rating: 5
-    },
-    {
-        name:'Ahmed',
-        review: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi sit fugit aliquam quasi rem totam tenetur ipsum mollitia iure, odit libero ab consequatur blanditiis voluptatem quos atque ullam eveniet neque?',
-        rating: 5
-    },
-    {
-        name:'Ahmed',
-        review: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi sit fugit aliquam quasi rem totam tenetur ipsum mollitia iure, odit libero ab consequatur blanditiis voluptatem quos atque ullam eveniet neque?',
-        rating: 5
-    },
-    {
-        name:'Ahmed',
-        review: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi sit fugit aliquam quasi rem totam tenetur ipsum mollitia iure, odit libero ab consequatur blanditiis voluptatem quos atque ullam eveniet neque?',
-        rating: 5
-    },
-]
+  const [reviews,setreviews] = useState([])
   const [upcoming,setUpcoming]= useState([])
 
   useEffect(()=>{
     axios.get('http://localhost:5000/upcoming')
     .then(res=>setUpcoming(res.data))
+  },[])
+
+  useEffect(()=>{
+    axios.get('http://localhost:5000/allreviews')
+    .then(res=>setreviews(res.data))
   },[])
 
   return (
@@ -73,10 +46,9 @@ const Sidepart = () => {
             <h1 className='text-center mt-4 mx-auto connect-h1 text-white'>Reviews</h1>
             <div className="review-div mx-auto my-3">
                 {
-                    data.map(review=> <div className="p-2 text-center mx-2 border-bottom">
-                        <h4>{review.name}</h4>
-                        <h6>{review.review}</h6>
-                        <h5>{review.rating}</h5>
+                    reviews.map(review=> <div key={review._id} className="p-2 text-center mx-2 border-bottom">
+                        <h4>{review.username}</h4>
+                        <h6>{review.feedback}</h6>
                     </div> )
                 }
             </div>

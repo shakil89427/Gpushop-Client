@@ -29,7 +29,7 @@ function App() {
       <Route path="/contact" element={<Contact />}></Route>
       <Route path="/allproducts" element={<AllProducts />}></Route>
       <Route path="/productdetails/:id" element={<PrivateRoute><ProductDetails /></PrivateRoute>}></Route>
-      <Route path="/pay/:id" element={<PrivateRoute><Pay /></PrivateRoute>}></Route>
+      <Route path="/pay" element={<PrivateRoute><Pay /></PrivateRoute>}></Route>
       
     </Routes>
     <Footer></Footer>
