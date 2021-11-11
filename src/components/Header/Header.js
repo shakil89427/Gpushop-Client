@@ -16,7 +16,7 @@ const Header = () => {
       </div>
       <div className="w-75 mx-auto d-flex justify-content-center align-items-center border-bottom p-1">
         <NavLink to='/'><button className='h-btn'>Home</button></NavLink>
-        <button className='h-btn'>All Products</button>
+        <NavLink to='/allproducts'><button className='h-btn'>All Products</button></NavLink>
         {
           user.displayName&&<button className='h-btn'>Dashboard</button>
         }

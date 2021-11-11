@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 const Footer = () => {
     return (
@@ -6,8 +7,8 @@ const Footer = () => {
         <div className='mt-3 mx-auto text-center footer'>
             <div className="">
                 <h4>CONTACT & ABOUT US</h4>
-                <p>About</p>
-                <p>Contact us</p>
+                <NavLink className='style' to='/support'><p>Support</p></NavLink>
+                <NavLink className='style' to='/contact'><p>Contact us</p></NavLink>
                 <p><i className="border-0 mx-1 fab fa-facebook"></i>
                     <i className="border-0 mx-1 fab fa-twitter"></i>
                     <i className="border-0 mx-1 fab fa-instagram"></i>

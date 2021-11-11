@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 
 const ProductDetails = () => {
     const [product,setProduct] = useState({})
-    const {id} = useParams()
+    const {id} = useParams();
 
     useEffect(()=>{
         axios.get(`http://localhost:5000/details/${id}`)

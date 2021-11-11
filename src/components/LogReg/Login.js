@@ -1,8 +1,11 @@
 import React from 'react';
+import { Navigate, useLocation } from 'react-router';
 import useAuth from '../AuthProvider/useAuth';
 
 const Login = () => {
     const {user,signInUsingGoogle} = useAuth()
+    const location = useLocation();
+    const to = location.state?.from;
     return (
         <div className='text-center w-50 mx-auto my-5 p-5'>
             <h1>Please Login</h1>
@@ -14,6 +17,9 @@ const Login = () => {
             <br />
             <p>----------------OR----------------</p>
             <button onClick={signInUsingGoogle} className='s-btn'>Login With Google</button>
+            {
+              user.displayName&& <Navigate to={to}></Navigate>  
+            }
         </div>
     );
 };

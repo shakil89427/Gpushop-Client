@@ -27,7 +27,7 @@ const LaitestProducts = () => {
             </div>
               <div className="text-center">
               <h5 className='text-danger'>Price: ${product.price}</h5>
-              <NavLink to={`productdetails/${product._id}`}><button className='buy-btn'>More Details & Buy</button></NavLink>
+              <NavLink to={`/productdetails/${product._id}`}><button className='buy-btn'>More Details & Buy</button></NavLink>
               </div>
           </div>
         ))}
