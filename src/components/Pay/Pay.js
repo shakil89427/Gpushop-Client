@@ -68,7 +68,6 @@ const Pay = () => {
 
     // Manage order Place
     const placeorder =()=>{
-        console.log(data)
         if(data.length===0){
             alert('No items Added On cart')
             return
