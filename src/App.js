@@ -13,6 +13,7 @@ import AuthProvider from "./components/AuthProvider/AuthProvider";
 import AllProducts from "./components/AllProducts/AllProducts";
 import Contact from "./components/Contact/Contact";
 import Support from "./components/Support/Support";
+import Dashboard from "./components/Dashboard/Dashboard";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
       <Route path="/support" element={<Support />}></Route>
       <Route path="/contact" element={<Contact />}></Route>
       <Route path="/allproducts" element={<AllProducts />}></Route>
+      <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>}></Route>
       <Route path="/productdetails/:id" element={<PrivateRoute><ProductDetails /></PrivateRoute>}></Route>
       <Route path="/pay" element={<PrivateRoute><Pay /></PrivateRoute>}></Route>
       

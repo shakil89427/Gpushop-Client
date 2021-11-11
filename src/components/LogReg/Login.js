@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navigate, useLocation } from 'react-router';
+import {Navigate, useLocation} from 'react-router';
 import useAuth from '../AuthProvider/useAuth';
 
 const Login = () => {
@@ -18,7 +18,7 @@ const Login = () => {
             <p>----------------OR----------------</p>
             <button onClick={signInUsingGoogle} className='s-btn'>Login With Google</button>
             {
-              user.displayName&& <Navigate to={to}></Navigate>  
+              user.displayName&& <Navigate to={to}/>  
             }
         </div>
     );

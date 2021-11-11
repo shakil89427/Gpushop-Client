@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import {Navigate, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import useAuth from '../AuthProvider/useAuth';
+import { NavLink } from 'react-router-dom';
 
 const ProductDetails = () => {
     const [product,setProduct] = useState({})
@@ -21,14 +22,6 @@ const ProductDetails = () => {
             .then(res=> {
                 if(res.data.acknowledged){
                     alert('Successfully added to cart')
-                }
-            })
-    }
-    const addBuy = () =>{
-            product.userId = user.uid;
-            axios.post('http://localhost:5000/addtocart',product)
-            .then(res=>{
-                if(res.data.acknowledged){
                     setredirect(true)
                 }
             })
@@ -56,10 +49,9 @@ const ProductDetails = () => {
             <h2 className='text-success'>{product.name}</h2>
             <h5>{product.description}</h5>
             <h4 className='text-danger'>Price: ${product.price}</h4>
-            <button onClick={addToCart} className='s-btn'>Add to Cart</button>
-            <button onClick={addBuy} className='s-btn'>Procced to Pay</button>
+            <button onClick={addToCart} className='s-btn'>Add to Cart</button> <br />
             {
-                redirect&& <Navigate to='/pay'></Navigate>
+                redirect&& <NavLink to='/pay'><button className='s-btn'>Procced to Pay</button></NavLink>
             }
             <form onSubmit={addreview}>
                 <h5 className='mt-5'>Write a review</h5>

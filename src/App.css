@@ -72,7 +72,10 @@ i:hover {
   width: 100%;
   padding: 5px;
   border: none;
-  background: rgba(2, 171, 250, 0.521);
+  background-color: rgb(247, 130, 109);
+}
+.buy-btn:hover{
+  background-color: rgb(112, 112, 247);
 }
 .upcoming{
   overflow-y: scroll;
@@ -99,7 +102,7 @@ i:hover {
   width: 100px;
   height: 30px;
   margin: 5px;
-  background-color: magenta;
+  background-color: rgb(134, 89, 5);
   color: white;
   border: none;
 }
@@ -151,4 +154,7 @@ i:hover {
 .pay-img{
   width: 200px;
   height: 200px;
+}
+.s-btn:hover{
+  background-color:green;
 }
