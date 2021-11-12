@@ -171,3 +171,60 @@ i:hover {
 .status2{
   color: green;
 }
+.remove{
+  border: none;
+  width: 90px;
+  background-color: red;
+  color: aliceblue;
+}
+.addinput{
+  margin-bottom: 10px;
+  width: 75%;
+  background-color: rgba(0, 255, 255, 0.425);
+  border: none;
+  padding: 5px;
+  outline: none;
+}
+.all{
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  grid-gap: 10px;
+}
+.allpd{
+  width: 100%;
+  min-height: 400px;
+}
+.pending{
+  width: 45%;
+  border: none;
+  background-color: yellow;
+  margin-right: 5px;
+}
+.approved{
+  width: 45%;
+  border: none;
+  background-color: green;
+  margin-right: 5px;
+}
+.delate{
+  width: 45%;
+  border: none;
+  background-color: red;
+  margin-left: 5px;
+}
+.rev{
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  grid-gap: 5px;
+  text-align: center;
+}
+.rev-main{
+  min-height: 300px;
+  border: 1px solid gray;
+  padding: 5px;
+}
+.revdelate{
+  border: none;
+  background-color: red;
+  color: white;
+}

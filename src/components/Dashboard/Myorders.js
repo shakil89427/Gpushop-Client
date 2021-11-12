@@ -5,14 +5,9 @@ import useAuth from '../AuthProvider/useAuth';
 const Myorders = () => {
     const {user} = useAuth()
     const [orders,setorders] = useState([])
-
     const loadData = ()=>{
         axios.get(`http://localhost:5000/myorders/${user.email}`)
-        .then(res=>{
-            if(res.data.length>0){
-                setorders(res.data)
-            }
-        })
+        .then(res=>setorders(res.data))
     }
 
     useEffect(()=>{
@@ -26,7 +21,7 @@ const Myorders = () => {
             axios.delete(`http://localhost:5000/delateorder/${id}`)
         .then(res=>{
             if(res.data.deletedCount){
-                loadData()
+                loadData();
                 alert('order successfully cancelled')
             }
         })
@@ -37,6 +32,9 @@ const Myorders = () => {
         <div>
             <h1 className='connect-h1 m-0 text-center text-white'>Your Orders</h1>
             {
+                orders.length===0 && <p className='text-center mt-5'>You dont have any placed orders</p>
+            }
+            {
               orders.map(order=> <div key={order._id} className="border-bottom text-center pb-2">
                   <img className='pr-img' src={order.img} alt="" />
                   <h4>{order.name}</h4>
@@ -45,7 +43,7 @@ const Myorders = () => {
                       order.status==='pending' && <h5 className='status1'>Order Status: {order.status}</h5>
                   }
                   {
-                      order.status==='approved' && <h5 className='status2'>Order Status: {order.status}</h5>
+                      order.status==='Approved' && <h5 className='status2'>Order Status: {order.status}</h5>
                   }
                   <button onClick={()=>cancel(order._id)} className='cancel'>Cancel Order</button>
               </div> )  
