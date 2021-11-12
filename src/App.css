@@ -158,3 +158,10 @@ i:hover {
 .s-btn:hover{
   background-color:green;
 }
+.cancel{
+  width: 120px;
+  border: none;
+  margin-left: 10px;
+  background-color: red;
+  color: white;
+}

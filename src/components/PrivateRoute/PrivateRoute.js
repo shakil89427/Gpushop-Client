@@ -11,7 +11,7 @@ const PrivateRoute = ({children,...rest}) => {
       </div>
     }
     if(!user.displayName){
-        return <Navigate to='/login' state={{from:location}}/>
+        return <Navigate to='/login' state={{location}}/>
     }
     return children
 };

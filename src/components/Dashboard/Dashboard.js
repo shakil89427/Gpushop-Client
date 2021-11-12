@@ -1,26 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { NavLink,Outlet } from 'react-router-dom';
+import Myprofile from './Myprofile';
 
 const Dashboard = () => {
+    const [btndefault,setbtndefault] = useState(false)
     return (
-        <>
-        <h3 className='text-center'>Welcome to Dashboard</h3>
-        <div className='container row mt-3'>
+        <div className='container row mt-5 mx-auto'>
             <div className="col-2 text-center border-end border-3">
-                <button className='s-btn'>My Cart</button>
-                <button className='s-btn'>My Orders</button>
-                <button className='s-btn'>My Profile</button>
-                <button className='s-btn'>Add Product</button>
-                <button className='s-btn'>Remove Product</button>
-                <button className='s-btn'>All Orders</button>
-                <button className='s-btn'>All Reviews</button>
-                <button className='s-btn'>Make Admin</button>
+                <NavLink to='myprofile'><button onClick={()=>setbtndefault(true)} className='s-btn'>My Profile</button></NavLink>
+                <NavLink to='mycart'><button onClick={()=>setbtndefault(true)} className='s-btn'>My Cart</button></NavLink>
+                <NavLink to='myorders'><button onClick={()=>setbtndefault(true)} className='s-btn'>My Orders</button></NavLink>
+                <NavLink to='addremove'><button onClick={()=>setbtndefault(true)} className='s-btn'>Add/Remove Product</button></NavLink>
+                <NavLink to='allorders'><button onClick={()=>setbtndefault(true)} className='s-btn'>All Orders</button></NavLink>
+                <NavLink to='allreviews'><button onClick={()=>setbtndefault(true)} className='s-btn'>All Reviews</button></NavLink>
+                <NavLink to='makeadmin'><button onClick={()=>setbtndefault(true)} className='s-btn'>Make Admin</button></NavLink>
             </div>
 
             <div className="col-10">
-
+                {
+                    btndefault? <Outlet/>: <Myprofile></Myprofile>
+                }
             </div>
         </div>
-        </>
     );
 };
 

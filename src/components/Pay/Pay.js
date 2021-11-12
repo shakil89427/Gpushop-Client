@@ -81,7 +81,7 @@ const Pay = () => {
         })
     }
     return (
-        <div className='w-75 mx-auto my-3 pb-5'>
+        <div className=' mx-auto pb-5'>
             <h1 className='connect-h1 text-white text-center'>Checkout</h1>
             <div className="row ">
                 <div className="col-8 py-5">
