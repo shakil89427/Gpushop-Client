@@ -5,7 +5,7 @@ const Allorders = () => {
     const [orders, setorders] = useState([])
 
     const loadData = ()=>{
-        axios.get('http://localhost:5000/allorders')
+        axios.get('https://salty-spire-32816.herokuapp.com/allorders')
         .then(res=>setorders(res.data))
     }
 
@@ -14,7 +14,7 @@ const Allorders = () => {
     },[])
 
     const changestatus=id=>{
-        axios.post(`http://localhost:5000/changestatus/${id}`)
+        axios.post(`https://salty-spire-32816.herokuapp.com/changestatus/${id}`)
         .then(res=>{
             if(res.data.modifiedCount){
                 loadData()
@@ -25,7 +25,7 @@ const Allorders = () => {
     const cancelorder=id=>{
         const confirmation = window.confirm('Are you Sure')
         if(confirmation){
-            axios.delete(`http://localhost:5000/delateorder/${id}`)
+            axios.delete(`https://salty-spire-32816.herokuapp.com/delateorder/${id}`)
         .then(res=>{
             if(res.data.deletedCount){
                 loadData()

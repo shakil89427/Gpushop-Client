@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 const LaitestProducts = () => {
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    axios.get("http://localhost:5000/allproducts").then((res) => {
+    axios.get("https://salty-spire-32816.herokuapp.com/allproducts").then((res) => {
       const data = res.data;
       const newData = data.slice(2, 8);
       setProducts(newData);

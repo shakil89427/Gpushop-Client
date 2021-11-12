@@ -14,7 +14,7 @@ const Pay = () => {
     
     // Data Load Function
     const loadData = () =>{
-        axios.get(`http://localhost:5000/allcart/${user.uid}`)
+        axios.get(`https://salty-spire-32816.herokuapp.com/allcart/${user.uid}`)
         .then(res=>setProducts(res.data))
     };
     useEffect(()=>{
@@ -57,7 +57,7 @@ const Pay = () => {
     const remove = id =>{
         const permition = window.confirm('Are u Sure?')
         if(permition){
-            axios.delete(`http://localhost:5000/deletefromcart/${id}?uid=${user.uid}`)
+            axios.delete(`https://salty-spire-32816.herokuapp.com/deletefromcart/${id}?uid=${user.uid}`)
             .then(res=>{
             if(res.data.deletedCount){
                 loadData()
@@ -72,7 +72,7 @@ const Pay = () => {
             alert('No items Added On cart')
             return
         }
-        axios.post('http://localhost:5000/placeorder',data)
+        axios.post('https://salty-spire-32816.herokuapp.com/placeorder',data)
         .then(res=>{
             if(res.data.acknowledged){
                 alert('Order Successfully Placed')

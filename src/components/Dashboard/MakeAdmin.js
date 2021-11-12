@@ -12,7 +12,7 @@ const MakeAdmin = () => {
         e.preventDefault()
         const confirmation=window.confirm('Are you Sure')
         if(confirmation){
-            axios.post(`http://localhost:5000/makeadmin/${email}`)
+            axios.post(`https://salty-spire-32816.herokuapp.com/makeadmin/${email}`)
             .then(res=>{
                 if(!res.data){
                     alert('Sorry user not registered')

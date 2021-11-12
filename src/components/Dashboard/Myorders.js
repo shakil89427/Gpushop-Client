@@ -6,7 +6,7 @@ const Myorders = () => {
     const {user} = useAuth()
     const [orders,setorders] = useState([])
     const loadData = ()=>{
-        axios.get(`http://localhost:5000/myorders/${user.email}`)
+        axios.get(`https://salty-spire-32816.herokuapp.com/myorders/${user.email}`)
         .then(res=>setorders(res.data))
     }
 
@@ -18,7 +18,7 @@ const Myorders = () => {
     const cancel = id =>{
         const confirmation  = window.confirm('Are you sure?')
         if(confirmation){
-            axios.delete(`http://localhost:5000/delateorder/${id}`)
+            axios.delete(`https://salty-spire-32816.herokuapp.com/delateorder/${id}`)
         .then(res=>{
             if(res.data.deletedCount){
                 loadData();

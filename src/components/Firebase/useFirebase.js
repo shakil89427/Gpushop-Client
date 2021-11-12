@@ -11,7 +11,7 @@ const useFirebase=()=>{
     const auth = getAuth();
 
     const loadData =newData=>{
-        axios.post('http://localhost:5000/adduser',newData)
+        axios.post('https://salty-spire-32816.herokuapp.com/adduser',newData)
         .then(res=>{
             if(res.data){
                 setuser(res.data)

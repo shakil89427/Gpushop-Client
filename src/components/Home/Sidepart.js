@@ -6,14 +6,16 @@ const Sidepart = () => {
   const [upcoming,setUpcoming]= useState([])
 
   useEffect(()=>{
-    axios.get('http://localhost:5000/upcoming')
+    axios.get('https://salty-spire-32816.herokuapp.com/upcoming')
     .then(res=>setUpcoming(res.data))
   },[])
 
   useEffect(()=>{
-    axios.get('http://localhost:5000/allreviews')
+    axios.get('https://salty-spire-32816.herokuapp.com/allreviews')
     .then(res=>setreviews(res.data))
   },[])
+
+  // https://salty-spire-32816.herokuapp.com/
 
   return (
     // CONNECT WITH US

@@ -12,13 +12,13 @@ const ProductDetails = () => {
     const {user} = useAuth()
 
     useEffect(()=>{
-        axios.get(`http://localhost:5000/details/${id}`)
+        axios.get(`https://salty-spire-32816.herokuapp.com/details/${id}`)
         .then(res=>setProduct(res.data))
     },[])
 
     const addToCart = () =>{
             product.userId = user.uid;
-            axios.post('http://localhost:5000/addtocart',product)
+            axios.post('https://salty-spire-32816.herokuapp.com/addtocart',product)
             .then(res=> {
                 if(res.data.acknowledged){
                     alert('Successfully added to cart')
@@ -34,7 +34,7 @@ const ProductDetails = () => {
     const addreview = e =>{
         e.preventDefault()
         const info = {username:user.displayName,feedback:review}
-        axios.post('http://localhost:5000/addreview',info)
+        axios.post('https://salty-spire-32816.herokuapp.com/addreview',info)
         .then(res=>{
             if(res.data.acknowledged){
                 alert('Review Successfully Added')

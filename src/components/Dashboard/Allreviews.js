@@ -5,7 +5,7 @@ const Allreviews = () => {
     const [reviews,setreviews] = useState([])
 
     const loadData =()=>{
-        axios.get('http://localhost:5000/allreviews')
+        axios.get('https://salty-spire-32816.herokuapp.com/allreviews')
         .then(res=>setreviews(res.data))
     }
 
@@ -17,7 +17,7 @@ const Allreviews = () => {
     const revdelate=id=>{
         const confirmation = window.confirm('AAre you Sure')
         if(confirmation){
-            axios.delete(`http://localhost:5000/deletereview/${id}`)
+            axios.delete(`https://salty-spire-32816.herokuapp.com/deletereview/${id}`)
         .then(res=>{
             if(res.data.deletedCount){
                 loadData()

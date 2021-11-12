@@ -6,7 +6,7 @@ const AddRemoveProduct = () => {
     let [data,setdata] = useState({})
 
     const loadData= () =>{
-        axios.get("http://localhost:5000/allproducts")
+        axios.get("https://salty-spire-32816.herokuapp.com/allproducts")
         .then((res) => setProducts(res.data));
     }
 
@@ -23,7 +23,7 @@ const AddRemoveProduct = () => {
   }
   const addproduct=e=>{
         e.preventDefault()
-        axios.post("http://localhost:5000/addproduct",data)
+        axios.post("https://salty-spire-32816.herokuapp.com/addproduct",data)
         .then(res=>{
             if(res.data.insertedId){
                 loadData()
@@ -36,7 +36,7 @@ const AddRemoveProduct = () => {
   const removepd = id =>{
       const confirmation = window.confirm('Are You Sure?')
       if(confirmation){
-        axios.delete(`http://localhost:5000/delateproduct/${id}`)
+        axios.delete(`https://salty-spire-32816.herokuapp.com/delateproduct/${id}`)
         .then(res=>{
             if(res.data.deletedCount){
                 loadData()
