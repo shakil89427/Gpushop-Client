@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { Navigate } from 'react-router';
 import useAuth from '../AuthProvider/useAuth';
@@ -23,8 +24,17 @@ const Signup = () => {
             alert('Password must be 6 character long')
             return
         }
-        register(userdata)
-        e.target.reset()
+        axios.get(`https://salty-spire-32816.herokuapp.com/finduser/${email}`)
+        .then(res=>{
+            if(!res.data){
+                register(userdata)
+                e.target.reset()
+            }
+            else{
+                alert('Email already Exists')
+            }
+        })
+        
     }
 
     return (
