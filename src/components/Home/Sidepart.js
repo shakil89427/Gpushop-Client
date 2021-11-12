@@ -15,7 +15,6 @@ const Sidepart = () => {
     .then(res=>setreviews(res.data))
   },[])
 
-  // https://salty-spire-32816.herokuapp.com/
 
   return (
     // CONNECT WITH US
