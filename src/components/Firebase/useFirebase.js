@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getAuth, signInWithPopup, GoogleAuthProvider,onAuthStateChanged,signOut} from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider,onAuthStateChanged,createUserWithEmailAndPassword,signOut} from "firebase/auth";
 import { useEffect, useState } from "react";
 import firebaseinit from "./firebaseinit";
 
@@ -19,6 +19,18 @@ const useFirebase=()=>{
             }
         })
     };
+
+    const register =userdata=>{
+        setloading(true)
+        createUserWithEmailAndPassword(auth,userdata.email,userdata.password)
+        .then(res=>{
+            if(res.user){
+                const {displayName,password} = userdata
+                const newdata = {...res.user,displayName,password}
+                loadData(newdata)
+            }
+        })
+    }
 
     const signInUsingGoogle=()=>{
         setloading(true)
@@ -51,6 +63,7 @@ const useFirebase=()=>{
         user,
         loading,
         signInUsingGoogle,
+        register,
         logout,
     }
 }
