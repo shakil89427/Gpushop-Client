@@ -7,7 +7,7 @@ const PrivateRoute = ({children,...rest}) => {
     const location = useLocation();
     if(loading){
         return <div className="spinner-border" role="status">
-        <span className="visually-hidden">Loading...</span>
+        <span className="visually-hidden"></span>
       </div>
     }
     if(!user.displayName){

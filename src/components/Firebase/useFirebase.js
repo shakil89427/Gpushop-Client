@@ -1,3 +1,4 @@
+import axios from "axios";
 import { getAuth, signInWithPopup, GoogleAuthProvider,onAuthStateChanged,signOut} from "firebase/auth";
 import { useEffect, useState } from "react";
 import firebaseinit from "./firebaseinit";
@@ -9,26 +10,33 @@ const useFirebase=()=>{
 
     const auth = getAuth();
 
+    const loadData =newData=>{
+        axios.post('http://localhost:5000/adduser',newData)
+        .then(res=>{
+            if(res.data){
+                setuser(res.data)
+                setloading(false)
+            }
+        })
+    };
 
     const signInUsingGoogle=()=>{
         setloading(true)
         const googleProvider = new GoogleAuthProvider();
         signInWithPopup(auth, googleProvider)
-        .then(result=> {
-            setuser(result.user)
-        })
+        .then(result=> setuser(result.user))
         .finally(()=>setloading(false))
     };
 
     useEffect(()=>{
         onAuthStateChanged(auth,user=>{
             if(user){
-                setuser(user)
+                loadData(user)
             }
             else{
                 setuser({})
+                setloading(false)
             }
-            setloading(false)
         })
     },[])
 
