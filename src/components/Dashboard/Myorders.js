@@ -42,10 +42,10 @@ const Myorders = () => {
                   <h4>{order.name}</h4>
                   <h5>Quantity: {order.quantity}</h5>
                   {
-                      order.status==='pending' && <h6 className='text-warning'>Order Status: {order.status}</h6>
+                      order.status==='pending' && <h5 className='status1'>Order Status: {order.status}</h5>
                   }
                   {
-                      order.status==='approved' && <p className='text-success'>Order Status: {order.status}</p>
+                      order.status==='approved' && <h5 className='status2'>Order Status: {order.status}</h5>
                   }
                   <button onClick={()=>cancel(order._id)} className='cancel'>Cancel Order</button>
               </div> )  
