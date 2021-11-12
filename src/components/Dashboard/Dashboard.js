@@ -9,9 +9,12 @@ const Dashboard = () => {
     return (
         <div className='container row mt-5 mx-auto'>
             <div className="col-2 text-center border-end border-3">
-                <NavLink to='myprofile'><button onClick={()=>setbtndefault(true)} className='s-btn'>My Profile</button></NavLink>
-                <NavLink to='mycart'><button onClick={()=>setbtndefault(true)} className='s-btn'>My Cart</button></NavLink>
-                <NavLink to='myorders'><button onClick={()=>setbtndefault(true)} className='s-btn'>My Orders</button></NavLink>
+                {
+                    user.role==='user'&& <span>
+                    <NavLink to='myprofile'><button onClick={()=>setbtndefault(true)} className='s-btn'>My Profile</button></NavLink>
+                    <NavLink to='mycart'><button onClick={()=>setbtndefault(true)} className='s-btn'>My Cart</button></NavLink>
+                    <NavLink to='myorders'><button onClick={()=>setbtndefault(true)} className='s-btn'>My Orders</button></NavLink></span>
+                }
                 {
                     user.role==='Admin'&& <span>
                     <NavLink to='addremove'><button onClick={()=>setbtndefault(true)} className='s-btn'>Manage Product</button></NavLink>
