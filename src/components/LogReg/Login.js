@@ -21,7 +21,7 @@ const Login = () => {
                 user.displayName && path && <Navigate to={path}/>
             }
             {
-                user.displayName && !path && <Navigate to='/home'/> 
+                user.displayName && !path && <Navigate to='/dashboard'/> 
             }
         </div>
     );
