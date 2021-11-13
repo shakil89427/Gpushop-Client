@@ -4,7 +4,7 @@ import { Navigate } from 'react-router';
 import useAuth from '../AuthProvider/useAuth';
 
 const Signup = () => {
-    const {user,register,loading,signInUsingGoogle} = useAuth()
+    const {user,register,loading,setloading,signInUsingGoogle} = useAuth()
     const [userdata,setuserdata] = useState({})
 
 
@@ -18,31 +18,31 @@ const Signup = () => {
 
     const registerdata=e=>{
         e.preventDefault()
-        const email = userdata.email
         const password = userdata.password
         if(password.length<6){
             alert('Password must be 6 character long')
             return
         }
-        axios.get(`https://salty-spire-32816.herokuapp.com/finduser/${email}`)
+        setloading(true)
+        axios.post('http://localhost:5000/finduser',userdata)
         .then(res=>{
-            if(!res.data){
+            if(!res.data._id){
                 register(userdata)
-                e.target.reset()
             }
             else{
                 alert('Email already Exists')
             }
+            e.target.reset()
         })
         
     }
-
     return (
         <div className='text-center w-50 mx-auto my-5 p-5'>
             {
-                loading?<div className="spinner-border" role="status">
+                loading&&<div className="spinner-border" role="status">
                 <span className="visually-hidden">Loading...</span>
-              </div> : <span>
+              </div>
+            }
             <h1>Please Signup</h1>
             <form onSubmit={registerdata}>
             <input className='logreg' onBlur={handleblur} required name='displayName' type="text" placeholder='Type your Name'/>
@@ -57,8 +57,6 @@ const Signup = () => {
             <button onClick={signInUsingGoogle} className='s-btn'>Google Signup</button>
             {
                 user.email && <Navigate to='/dashboard'/> 
-            }
-            </span>
             }
         </div>
     );

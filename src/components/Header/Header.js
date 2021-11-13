@@ -27,7 +27,7 @@ const Header = () => {
         
       </div>
       {
-          user.email&& <p className='text-center'>Hello: {user.email}</p>
+          user.displayName&& <p className='text-center'>Hello: {user.displayName}</p>
         }
     </>
   );

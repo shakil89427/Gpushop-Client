@@ -4,7 +4,7 @@ import {Navigate, useLocation} from 'react-router';
 import useAuth from '../AuthProvider/useAuth';
 
 const Login = () => {
-    const {user,emailsign,signInUsingGoogle} = useAuth()
+    const {user,emailsign,setloading,loading,signInUsingGoogle} = useAuth()
     const getlocation = useLocation();
     const path = getlocation?.state?.location;
     const [userdata,setuserdata] = useState({})
@@ -19,10 +19,11 @@ const Login = () => {
 
     const login =e=>{
         e.preventDefault()
-
+        setloading(true)
         axios.get(`https://salty-spire-32816.herokuapp.com/finduser/${userdata.email}`)
         .then(res=>{console.log(res.data)
             if(!res.data){
+                setloading(false)
                 alert('User not exists')
                 e.target.reset()
             }
@@ -37,6 +38,11 @@ const Login = () => {
 
     return (
         <div className='text-center w-50 mx-auto my-5 p-5'>
+            {
+                loading&&<div className="spinner-border" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+            }
             <h1>Please Login</h1>
             <form onSubmit={login}>
             <input onBlur={handleblur} required className='logreg' name='email' type="email" placeholder='Type your email'/>

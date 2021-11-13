@@ -6,9 +6,9 @@ const PrivateRoute = ({children,...rest}) => {
     const {user,loading} = useAuth()
     const location = useLocation();
     if(loading){
-        return <div className="spinner-border" role="status">
+        return <div className='mt-5 text-center'><div className="spinner-border" role="status">
         <span className="visually-hidden"></span>
-      </div>
+      </div></div>
     }
     if(!user.email){
         return <Navigate to='/login' state={{location}}/>

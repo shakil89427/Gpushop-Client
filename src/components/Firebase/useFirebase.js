@@ -11,7 +11,7 @@ const useFirebase=()=>{
     const auth = getAuth();
 
     const loadData =newData=>{
-             axios.post('https://salty-spire-32816.herokuapp.com/adduser',newData)
+             axios.post('http://localhost:5000/adduser',newData)
             .then(res=>{
                     setuser(res.data)
                     setloading(false)
@@ -27,12 +27,17 @@ const useFirebase=()=>{
             setuser(res.user)
             setloading(false)
         })
+        .catch(err=>alert(err))
     }
 
 
     const emailsign =(logindata)=>{
         signInWithEmailAndPassword(auth,logindata.email,logindata.password)
-        .then((res)=>setuser(res.user))
+        .then((res)=>{
+            setuser(res.user)
+        })
+        .catch(err=>alert(err))
+        .finally(()=>setloading(false))
     }
 
     const signInUsingGoogle=()=>{
@@ -40,6 +45,7 @@ const useFirebase=()=>{
         const googleProvider = new GoogleAuthProvider();
         signInWithPopup(auth, googleProvider)
         .then(result=> setuser(result.user))
+        .catch(err=>alert(err))
         .finally(()=>setloading(false))
     };
 
@@ -63,11 +69,13 @@ const useFirebase=()=>{
         setloading(true)
         signOut(auth)
         .then(()=>setuser({}))
+        .catch(err=>alert(err))
         .finally(()=>setloading(false))
     }
 
     return{
         user,
+        setloading,
         loading,
         signInUsingGoogle,
         emailsign,
