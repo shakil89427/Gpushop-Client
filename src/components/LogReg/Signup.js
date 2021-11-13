@@ -41,7 +41,7 @@ const Signup = () => {
         <div className='text-center w-50 mx-auto my-5 p-5'>
             {
                 loading?<div className="spinner-border" role="status">
-                <span class="visually-hidden">Loading...</span>
+                <span className="visually-hidden">Loading...</span>
               </div> : <span>
             <h1>Please Signup</h1>
             <form onSubmit={registerdata}>
@@ -56,7 +56,7 @@ const Signup = () => {
             <p>----------------OR----------------</p>
             <button onClick={signInUsingGoogle} className='s-btn'>Google Signup</button>
             {
-                user.displayName && <Navigate to='/dashboard'/> 
+                user.email && <Navigate to='/dashboard'/> 
             }
             </span>
             }

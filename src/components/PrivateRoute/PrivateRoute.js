@@ -10,7 +10,7 @@ const PrivateRoute = ({children,...rest}) => {
         <span className="visually-hidden"></span>
       </div>
     }
-    if(!user.displayName){
+    if(!user.email){
         return <Navigate to='/login' state={{location}}/>
     }
     return children

@@ -1,27 +1,58 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useState } from 'react';
 import {Navigate, useLocation} from 'react-router';
 import useAuth from '../AuthProvider/useAuth';
 
 const Login = () => {
-    const {user,signInUsingGoogle} = useAuth()
+    const {user,emailsign,signInUsingGoogle} = useAuth()
     const getlocation = useLocation();
     const path = getlocation?.state?.location;
+    const [userdata,setuserdata] = useState({})
+
+    const handleblur = e =>{
+        const field = e.target.name
+        const value = e.target.value
+        const newData = {...userdata}
+        newData[field] = value
+        setuserdata(newData)
+    }
+
+    const login =e=>{
+        e.preventDefault()
+
+        axios.get(`https://salty-spire-32816.herokuapp.com/finduser/${userdata.email}`)
+        .then(res=>{console.log(res.data)
+            if(!res.data){
+                alert('User not exists')
+                e.target.reset()
+            }
+            else{
+                emailsign(userdata)
+                e.target.reset()
+            }
+        })
+        
+    }
+
+
     return (
         <div className='text-center w-50 mx-auto my-5 p-5'>
             <h1>Please Login</h1>
-            <input className='logreg' type="email" placeholder='Type your email'/>
+            <form onSubmit={login}>
+            <input onBlur={handleblur} required className='logreg' name='email' type="email" placeholder='Type your email'/>
             <br />
-            <input className='logreg' type="password" placeholder='Type your password'/>
+            <input onBlur={handleblur} required className='logreg' name='password' type="password" placeholder='Type your password'/>
             <br />
-            <button className='s-btn'>Login</button>
-            <br />
+            <button type='submit' className='s-btn'>Login</button>
+            </form>
+            
             <p>----------------OR----------------</p>
             <button onClick={signInUsingGoogle} className='s-btn'>Login With Google</button>
             {
-                user.displayName && path && <Navigate to={path}/>
+                user.email && path && <Navigate to={path}/>
             }
             {
-                user.displayName && !path && <Navigate to='/dashboard'/> 
+                user.email && !path && <Navigate to='/dashboard'/> 
             }
         </div>
     );

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getAuth, signInWithPopup, GoogleAuthProvider,onAuthStateChanged,createUserWithEmailAndPassword,signOut} from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider,onAuthStateChanged,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut} from "firebase/auth";
 import { useEffect, useState } from "react";
 import firebaseinit from "./firebaseinit";
 
@@ -11,25 +11,28 @@ const useFirebase=()=>{
     const auth = getAuth();
 
     const loadData =newData=>{
-        axios.post('https://salty-spire-32816.herokuapp.com/adduser',newData)
-        .then(res=>{
-            if(res.data){
-                setuser(res.data)
-                setloading(false)
-            }
+             axios.post('https://salty-spire-32816.herokuapp.com/adduser',newData)
+            .then(res=>{
+                    setuser(res.data)
+                    setloading(false)
         })
     };
+
+    
 
     const register =userdata=>{
         setloading(true)
         createUserWithEmailAndPassword(auth,userdata.email,userdata.password)
-        .then(res=>{
-            if(res.user){
-                const {displayName,password} = userdata
-                const newdata = {...res.user,displayName,password}
-                loadData(newdata)
-            }
+        .then((res)=>{
+            setuser(res.user)
+            setloading(false)
         })
+    }
+
+
+    const emailsign =(logindata)=>{
+        signInWithEmailAndPassword(auth,logindata.email,logindata.password)
+        .then((res)=>setuser(res.user))
     }
 
     const signInUsingGoogle=()=>{
@@ -40,6 +43,7 @@ const useFirebase=()=>{
         .finally(()=>setloading(false))
     };
 
+
     useEffect(()=>{
         onAuthStateChanged(auth,user=>{
             if(user){
@@ -49,8 +53,11 @@ const useFirebase=()=>{
                 setuser({})
                 setloading(false)
             }
+            
         })
     },[])
+
+     
 
     const logout=()=>{
         setloading(true)
@@ -63,6 +70,7 @@ const useFirebase=()=>{
         user,
         loading,
         signInUsingGoogle,
+        emailsign,
         register,
         logout,
     }
