@@ -24,7 +24,7 @@ const Signup = () => {
             return
         }
         setloading(true)
-        axios.post('http://localhost:5000/finduser',userdata)
+        axios.post('https://salty-spire-32816.herokuapp.com/finduser',userdata)
         .then(res=>{
             if(!res.data._id){
                 register(userdata)
