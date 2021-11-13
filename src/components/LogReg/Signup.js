@@ -8,7 +8,7 @@ const Signup = () => {
     const [userdata,setuserdata] = useState({})
 
 
-    const handleblur = e=>{
+    const handleChange = e=>{
         const field = e.target.name
         const value = e.target.value
         const newData = {...userdata}
@@ -30,6 +30,7 @@ const Signup = () => {
                 register(userdata)
             }
             else{
+                setloading(false)
                 alert('Email already Exists')
             }
             e.target.reset()
@@ -45,11 +46,11 @@ const Signup = () => {
             }
             <h1>Please Signup</h1>
             <form onSubmit={registerdata}>
-            <input className='logreg' onBlur={handleblur} required name='displayName' type="text" placeholder='Type your Name'/>
+            <input className='logreg' onChange={handleChange} required name='displayName' type="text" placeholder='Type your Name'/>
             <br />
-            <input className='logreg' onBlur={handleblur} required name='email' type="email" placeholder='Type your email'/>
+            <input className='logreg' onChange={handleChange} required name='email' type="email" placeholder='Type your email'/>
             <br />
-            <input className='logreg' onBlur={handleblur} required name='password' type="password" placeholder='Type your password'/>
+            <input className='logreg' onChange={handleChange} required name='password' type="password" placeholder='Type your password'/>
             <br />
             <button type='submit' className='s-btn'>Signup</button>
             </form>

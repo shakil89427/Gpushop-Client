@@ -9,7 +9,7 @@ const Login = () => {
     const path = getlocation?.state?.location;
     const [userdata,setuserdata] = useState({})
 
-    const handleblur = e =>{
+    const handleChange = e =>{
         const field = e.target.name
         const value = e.target.value
         const newData = {...userdata}
@@ -20,8 +20,8 @@ const Login = () => {
     const login =e=>{
         e.preventDefault()
         setloading(true)
-        axios.get(`https://salty-spire-32816.herokuapp.com/finduser/${userdata.email}`)
-        .then(res=>{console.log(res.data)
+        axios.post('https://salty-spire-32816.herokuapp.com/finduser/',userdata)
+        .then(res=>{
             if(!res.data){
                 setloading(false)
                 alert('User not exists')
@@ -45,9 +45,9 @@ const Login = () => {
             }
             <h1>Please Login</h1>
             <form onSubmit={login}>
-            <input onBlur={handleblur} required className='logreg' name='email' type="email" placeholder='Type your email'/>
+            <input onChange={handleChange} required className='logreg' name='email' type="email" placeholder='Type your email'/>
             <br />
-            <input onBlur={handleblur} required className='logreg' name='password' type="password" placeholder='Type your password'/>
+            <input onChange={handleChange} required className='logreg' name='password' type="password" placeholder='Type your password'/>
             <br />
             <button type='submit' className='s-btn'>Login</button>
             </form>

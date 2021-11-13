@@ -35,9 +35,10 @@ const useFirebase=()=>{
         signInWithEmailAndPassword(auth,logindata.email,logindata.password)
         .then((res)=>{
             setuser(res.user)
+            setloading(false)
         })
         .catch(err=>alert(err))
-        .finally(()=>setloading(false))
+        .finally(setloading(false))
     }
 
     const signInUsingGoogle=()=>{
@@ -46,7 +47,7 @@ const useFirebase=()=>{
         signInWithPopup(auth, googleProvider)
         .then(result=> setuser(result.user))
         .catch(err=>alert(err))
-        .finally(()=>setloading(false))
+        .finally(setloading(false))
     };
 
 
