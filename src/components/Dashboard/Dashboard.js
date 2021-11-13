@@ -17,6 +17,7 @@ const Dashboard = () => {
                 }
                 {
                     user.role==='Admin'&& <span>
+                    <NavLink to='myprofile'><button onClick={()=>setbtndefault(true)} className='s-btn'>My Profile</button></NavLink>
                     <NavLink to='addremove'><button onClick={()=>setbtndefault(true)} className='s-btn'>Manage Product</button></NavLink>
                     <NavLink to='allorders'><button onClick={()=>setbtndefault(true)} className='s-btn'>All Orders</button></NavLink>
                     <NavLink to='allreviews'><button onClick={()=>setbtndefault(true)} className='s-btn'>All Reviews</button></NavLink>
