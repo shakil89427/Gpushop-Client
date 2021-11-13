@@ -28,6 +28,7 @@ const useFirebase=()=>{
             setloading(false)
         })
         .catch(err=>alert(err))
+        .finally(setloading(false))
     }
 
 
