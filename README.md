@@ -1,6 +1,5 @@
 # Created for Assaignment 12
 
-
 ## Used to Create
 
 Html,css,react,node js,mongodb
@@ -23,4 +22,4 @@ Website is about single catagory product
 
 ### `Login method`
 
-Google and email+password
+Google and email,password
