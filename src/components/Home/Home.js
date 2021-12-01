@@ -1,19 +1,17 @@
 import React from "react";
 import Banner from "./Banner";
 import LaitestProducts from "./LaitestProducts";
-import Newslatter from "./Newslatter";
-import Sidepart from "./Sidepart";
+import ReviewNews from "./ReviewNews";
+import Upcoming from "./Upcoming";
 
 const Home = () => {
   return (
-      <div className=" mt-2 mx-auto container row">
-        <div className="col-8">
-          <Banner></Banner>
-          <LaitestProducts></LaitestProducts>
-          <Newslatter></Newslatter>
-        </div>
-        <Sidepart></Sidepart>
-      </div>
+    <div className="container mt-2">
+      <Banner></Banner>
+      <LaitestProducts></LaitestProducts>
+      <Upcoming></Upcoming>
+      <ReviewNews></ReviewNews>
+    </div>
   );
 };
 
