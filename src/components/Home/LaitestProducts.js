@@ -25,16 +25,16 @@ const LaitestProducts = () => {
       ) : (
         <div className="row">
           {products.map((product) => (
-            <div className="col-6 col-lg-4" key={product._id}>
-              <div className="m-1 product">
+            <div className="col-6 col-lg-4 " key={product._id}>
+              <div className="m-1 product shadow mt-3">
                 <div className="text-center">
                   <img className="pr-img" src={product.img} alt="" />
                   <h6>{product.name}</h6>
                 </div>
-                <div className="text-center">
+                <div className="text-center mb-3">
                   <h5 className="text-danger">Price: ${product.price}</h5>
                   <NavLink to={`/productdetails/${product._id}`}>
-                    <button className="w-75 border-0 bg-dark text-white rounded py-1">
+                    <button className="m-1 shadow border-0 rounded bg-white px-3 py-1">
                       More Details & Buy
                     </button>
                   </NavLink>

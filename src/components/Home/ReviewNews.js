@@ -25,8 +25,8 @@ const ReviewNews = () => {
   };
 
   return (
-    <div className="border-top border-5 shadow mt-3 mx-2 row">
-      <div className="col-12 col-md-6 col-lg-6 my-2 mx-auto">
+    <div className="mt-3 mx-2 row">
+      <div className="col-12 col-md-12 col-lg-6 my-2 mx-auto">
         <div className="border-top h-100 border-5 shadow ">
           <h2 className="text-center mx-auto">All Reviews</h2>
           <hr className="w-25 py-1 mx-auto rounded mt-0 " />
@@ -44,7 +44,7 @@ const ReviewNews = () => {
           </Slider>
         </div>
       </div>
-      <div className=" col-12 col-md-6 col-lg-6 mx-auto my-2 text-center">
+      <div className=" col-12 col-md-12 col-lg-6 mx-auto my-2 text-center">
         <div className="border-top border-5 shadow">
           <h2 className="text-center">Write a Review</h2>
           <hr className="w-50 py-1 mx-auto rounded mt-0 mb-1" />
