@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Spinner } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 
 const LaitestProducts = () => {
@@ -18,9 +19,9 @@ const LaitestProducts = () => {
     <div>
       <h1 className="fw-bolder text-center mt-3">Laitest Products</h1>
       <hr className=" w-25 py-1 mx-auto rounded mt-0" />
-      {!products ? (
-        <div className="spinner-border" role="status">
-          <span>Loading...</span>
+      {products.length === 0 ? (
+        <div className="py-5 my-5 text-center">
+          <Spinner animation="border" />
         </div>
       ) : (
         <div className="row">

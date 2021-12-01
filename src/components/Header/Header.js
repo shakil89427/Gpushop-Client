@@ -9,7 +9,7 @@ const Header = () => {
     <div className="">
       <Navbar collapseOnSelect expand="lg">
         <Container>
-          <NavLink className="text-decoration-none text-dark" to="/home">
+          <NavLink className="text-decoration-none text-dark" to="/">
             <h1 className="d-inline fw-bolder m-0">
               <img
                 className="w-25"
@@ -22,7 +22,7 @@ const Header = () => {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="text-center ms-auto">
-              <NavLink to="/">
+              <NavLink to="/home">
                 <button className="m-1 shadow border-0 rounded fw-bold bg-white px-3 py-1">
                   Home
                 </button>

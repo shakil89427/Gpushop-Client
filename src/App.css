@@ -1,6 +1,10 @@
 .title {
   font-weight: 800;
 }
+.main-btn:hover {
+  background-color: rgb(153, 8, 8);
+  color: blue;
+}
 .h-btn {
   border: none;
   background: none;

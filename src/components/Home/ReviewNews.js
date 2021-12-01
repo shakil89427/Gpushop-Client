@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Spinner } from "react-bootstrap";
 
 const ReviewNews = () => {
   const [reviews, setreviews] = useState([]);
@@ -30,18 +31,24 @@ const ReviewNews = () => {
         <div className="border-top h-100 border-5 shadow ">
           <h2 className="text-center mx-auto">All Reviews</h2>
           <hr className="w-25 py-1 mx-auto rounded mt-0 " />
-          <Slider {...settings} className="text-center rounded px-3">
-            {reviews.map((review) => (
-              <div key={review._id} className="review">
-                <h5>{review.username}</h5>
-                {review.feedback.length > 200 ? (
-                  <p>{review.feedback.slice(0, 200)}....</p>
-                ) : (
-                  <p>{review.feedback}</p>
-                )}
-              </div>
-            ))}
-          </Slider>
+          {reviews.length === 0 ? (
+            <div className="mt-5 text-center">
+              <Spinner animation="border" />
+            </div>
+          ) : (
+            <Slider {...settings} className="text-center rounded px-3">
+              {reviews.map((review) => (
+                <div key={review._id} className="review">
+                  <h5>{review.username}</h5>
+                  {review.feedback.length > 200 ? (
+                    <p>{review.feedback.slice(0, 200)}....</p>
+                  ) : (
+                    <p>{review.feedback}</p>
+                  )}
+                </div>
+              ))}
+            </Slider>
+          )}
         </div>
       </div>
       <div className=" col-12 col-md-12 col-lg-6 mx-auto my-2 text-center">
