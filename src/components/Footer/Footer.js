@@ -1,19 +1,11 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 
 const Footer = () => {
   return (
     <div className="bg-dark mt-3 text-white text-center">
       <div className="container mx-auto py-3 row">
         <div className="mt-2 col-12 col-md-4 col-lg-4">
-          <h4>CONTACT & ABOUT US</h4>
-          <NavLink className="text-decoration-none" to="/support">
-            <span>Support</span>
-          </NavLink>
-          <br />
-          <NavLink className="text-decoration-none" to="/contact">
-            <span>Contact us</span>
-          </NavLink>
+          <h4>HELP & ABOUT US</h4>
           <p className="mt-3 mb-0">
             <i className="p-1 mx-1 rounded fs-3 fab fa-facebook"></i>
             <i className="p-1 mx-1 rounded fs-3 fab fa-twitter"></i>

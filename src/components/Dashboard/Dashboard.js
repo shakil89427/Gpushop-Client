@@ -1,37 +1,124 @@
-import React, { useState } from 'react';
-import { NavLink,Outlet } from 'react-router-dom';
-import useAuth from '../AuthProvider/useAuth';
-import Myprofile from './Myprofile';
+import React, { useState } from "react";
+import { NavLink, Outlet } from "react-router-dom";
+import useAuth from "../AuthProvider/useAuth";
+import Myprofile from "./Myprofile";
 
 const Dashboard = () => {
-    const {user,logout} = useAuth()
-    const [btndefault,setbtndefault] = useState(false)
-    return (
-        <div className='container row mt-5 mx-auto'>
-            <div className="col-2 text-center border-end border-3">
-                {
-                    user.role==='user'&& <span>
-                    <NavLink to='myprofile'><button onClick={()=>setbtndefault(true)} className='s-btn'>My Profile</button></NavLink>
-                    <NavLink to='mycart'><button onClick={()=>setbtndefault(true)} className='s-btn'>My Cart</button></NavLink>
-                    <NavLink to='myorders'><button onClick={()=>setbtndefault(true)} className='s-btn'>My Orders</button></NavLink><button className='s-btn mt-5' onClick={logout}>Logout</button></span>
-                }
-                {
-                    user.role==='Admin'&& <span>
-                    <NavLink to='myprofile'><button onClick={()=>setbtndefault(true)} className='s-btn'>My Profile</button></NavLink>
-                    <NavLink to='addremove'><button onClick={()=>setbtndefault(true)} className='s-btn'>Manage Product</button></NavLink>
-                    <NavLink to='allorders'><button onClick={()=>setbtndefault(true)} className='s-btn'>All Orders</button></NavLink>
-                    <NavLink to='allreviews'><button onClick={()=>setbtndefault(true)} className='s-btn'>All Reviews</button></NavLink>
-                    <NavLink to='makeadmin'><button onClick={()=>setbtndefault(true)} className='s-btn'>Make Admin</button></NavLink><button className='s-btn mt-5' onClick={logout}>Logout</button></span>
-                }
-            </div>
+  const { user, logout } = useAuth();
+  const [btndefault, setbtndefault] = useState(false);
+  return (
+    <div className="row mt-1 mx-auto">
+      {user.role === "Admin" && (
+        <span className="shadow row mx-auto text-center">
+          <div className="col-4 col-md-2 col-lg-2 p-0">
+            <NavLink to="myprofile">
+              <button
+                onClick={() => setbtndefault(true)}
+                className="w-100 mb-1 border-0 rounded-pill bg-dark text-white px-3 py-1"
+              >
+                My Profile
+              </button>
+            </NavLink>
+          </div>
+          <div className="col-4 col-md-2 col-lg-2 p-0">
+            <NavLink to="addremove">
+              <button
+                onClick={() => setbtndefault(true)}
+                className="w-100 mb-1 border-0 rounded-pill bg-dark text-white px-3 py-1"
+              >
+                Manage PD
+              </button>
+            </NavLink>
+          </div>
+          <div className="col-4 col-md-2 col-lg-2 p-0">
+            <NavLink to="allorders">
+              <button
+                onClick={() => setbtndefault(true)}
+                className="w-100 mb-1 border-0 rounded-pill bg-dark text-white px-3 py-1"
+              >
+                All Orders
+              </button>
+            </NavLink>
+          </div>
+          <div className="col-4 col-md-2 col-lg-2 p-0">
+            <NavLink to="allreviews">
+              <button
+                onClick={() => setbtndefault(true)}
+                className="w-100 mb-1 border-0 rounded-pill bg-dark text-white px-3 py-1"
+              >
+                All Reviews
+              </button>
+            </NavLink>
+          </div>
+          <div className="col-4 col-md-2 col-lg-2 p-0">
+            <NavLink to="makeadmin">
+              <button
+                onClick={() => setbtndefault(true)}
+                className="w-100 mb-1 border-0 rounded-pill bg-dark text-white px-3 py-1"
+              >
+                Make Admin
+              </button>
+            </NavLink>
+          </div>
+          <div className="col-4 col-md-2 col-lg-2 p-0">
+            <button
+              className="w-100 mb-1 border-0 rounded-pill bg-dark text-white px-3 py-1"
+              onClick={logout}
+            >
+              Logout
+            </button>
+          </div>
+        </span>
+      )}
+      {user.role === "user" && (
+        <span className="shadow-lg d-flex justify-content-center row mx-auto text-center">
+          <div className="col-4 col-md-2 col-lg-2 p-0">
+            <NavLink to="myprofile">
+              <button
+                onClick={() => setbtndefault(true)}
+                className="w-100 mb-1 border-0 rounded-pill bg-dark text-white px-3 py-1"
+              >
+                My Profile
+              </button>
+            </NavLink>
+          </div>
 
-            <div className="col-10">
-                {
-                    btndefault? <Outlet/>: <Myprofile></Myprofile>
-                }
-            </div>
-        </div>
-    );
+          <div className="col-4 col-md-2 col-lg-2 p-0">
+            <NavLink to="mycart">
+              <button
+                onClick={() => setbtndefault(true)}
+                className="w-100 mb-1 border-0 rounded-pill bg-dark text-white px-3 py-1"
+              >
+                My Cart
+              </button>
+            </NavLink>
+          </div>
+          <div className="col-4 col-md-2 col-lg-2 p-0">
+            <NavLink to="myorders">
+              <button
+                onClick={() => setbtndefault(true)}
+                className="w-100 mb-1 border-0 rounded-pill bg-dark text-white px-3 py-1"
+              >
+                My Orders
+              </button>
+            </NavLink>
+          </div>
+          <div className="col-4 col-md-2 col-lg-2 p-0">
+            <NavLink to="addreview">
+              <button
+                onClick={() => setbtndefault(true)}
+                className="w-100 mb-1 border-0 rounded-pill bg-dark text-white px-3 py-1"
+              >
+                Add Review
+              </button>
+            </NavLink>
+          </div>
+        </span>
+      )}
+      <div className="col-12 col-md-3 col-lg-3 "></div>
+      <div>{btndefault ? <Outlet /> : <Myprofile></Myprofile>}</div>
+    </div>
+  );
 };
 
 export default Dashboard;

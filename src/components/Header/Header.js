@@ -7,7 +7,7 @@ import logo from "./logo.png";
 const Header = () => {
   const { user, logout } = useAuth();
   return (
-    <div>
+    <div className="">
       <Navbar className="bg-dark" collapseOnSelect expand="lg">
         <Container>
           <NavLink className="text-decoration-none text-dark" to="/">

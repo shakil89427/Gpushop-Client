@@ -1,55 +1,79 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import useAuth from '../AuthProvider/useAuth';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Spinner } from "react-bootstrap";
+import useAuth from "../AuthProvider/useAuth";
 
 const Myorders = () => {
-    const {user} = useAuth()
-    const [orders,setorders] = useState([])
-    const loadData = ()=>{
-        axios.get(`https://salty-spire-32816.herokuapp.com/myorders/${user.email}`)
-        .then(res=>setorders(res.data))
+  const { user } = useAuth();
+  const [orders, setorders] = useState([]);
+  const [wait, setWait] = useState(false);
+  const loadData = () => {
+    axios
+      .get(`https://salty-spire-32816.herokuapp.com/myorders/${user.email}`)
+      .then((res) => {
+        setWait(false);
+        setorders(res.data);
+      });
+  };
+
+  useEffect(() => {
+    setWait(true);
+    loadData();
+  }, []);
+
+  const cancel = (id) => {
+    const confirmation = window.confirm("Are you sure?");
+    if (confirmation) {
+      axios
+        .delete(`https://salty-spire-32816.herokuapp.com/delateorder/${id}`)
+        .then((res) => {
+          if (res.data.deletedCount) {
+            loadData();
+            alert("order successfully cancelled");
+          }
+        });
     }
+  };
 
-    useEffect(()=>{
-        loadData()
-    },[])
-
-
-    const cancel = id =>{
-        const confirmation  = window.confirm('Are you sure?')
-        if(confirmation){
-            axios.delete(`https://salty-spire-32816.herokuapp.com/delateorder/${id}`)
-        .then(res=>{
-            if(res.data.deletedCount){
-                loadData();
-                alert('order successfully cancelled')
-            }
-        })
-        }
-    }
-
-    return (
-        <div>
-            <h1 className='connect-h1 m-0 text-center text-white'>Your Orders</h1>
-            {
-                orders.length===0 && <p className='text-center mt-5'>You dont have any placed orders</p>
-            }
-            {
-              orders.map(order=> <div key={order._id} className="border-bottom text-center pb-2">
-                  <img className='pr-img' src={order.img} alt="" />
-                  <h4>{order.name}</h4>
-                  <h5>Quantity: {order.quantity}</h5>
-                  {
-                      order.status==='pending' && <h5 className='status1'>Order Status: {order.status}</h5>
-                  }
-                  {
-                      order.status==='Approved' && <h5 className='status2'>Order Status: {order.status}</h5>
-                  }
-                  <button onClick={()=>cancel(order._id)} className='cancel'>Cancel Order</button>
-              </div> )  
-            }
+  return (
+    <div>
+      <h1 className="text-center">Your Orders</h1>
+      <hr className="w-25 pb-1 mx-auto rounded mt-0" />
+      {wait && (
+        <div className="text-center">
+          <Spinner animation="border" />
         </div>
-    );
+      )}
+      {orders.length === 0 && (
+        <p className="text-center mt-5">You dont have any placed orders</p>
+      )}
+      <div className="row">
+        {orders.map((order) => (
+          <div key={order._id} className="col-12 col-md-6 col-lg-4 p-1">
+            <div className="text-center shadow rounded p-2">
+              <img className="w-25" src={order.img} alt="" />
+              <h5>{order.name}</h5>
+              <h6>Quantity: {order.quantity}</h6>
+
+              {order.status === "pending" && (
+                <p className="status1">Order Status: {order.status}</p>
+              )}
+
+              {order.status === "Approved" && (
+                <p className="status2">Order Status: {order.status}</p>
+              )}
+              <button
+                onClick={() => cancel(order._id)}
+                className="m-1 border-0 rounded bg-dark text-white px-3 py-1"
+              >
+                Cancel Order
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default Myorders;

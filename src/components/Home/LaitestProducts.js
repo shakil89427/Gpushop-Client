@@ -17,7 +17,7 @@ const LaitestProducts = () => {
 
   return (
     <div>
-      <h1 className="fw-bolder text-center mt-3">Laitest Products</h1>
+      <h1 className="fw-bolder text-center">Laitest Products</h1>
       <hr className=" w-25 py-1 mx-auto rounded mt-0" />
       {products.length === 0 ? (
         <div className="py-5 my-5 text-center">
