@@ -10,10 +10,10 @@ const Home = () => {
   return (
     <div className="container mt-2">
       <Banner></Banner>
-      <Best></Best>
       <LaitestProducts></LaitestProducts>
       <Upcoming></Upcoming>
       <Reviews></Reviews>
+      <Best></Best>
       <Contact></Contact>
     </div>
   );
