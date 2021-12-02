@@ -24,9 +24,9 @@ const Dashboard = () => {
             <NavLink to="addremove">
               <button
                 onClick={() => setbtndefault(true)}
-                className="w-100 mb-1 border-0 rounded-pill bg-dark text-white px-3 py-1"
+                className="w-100 mb-1 border-0 rounded-pill bg-dark text-white py-1"
               >
-                Manage PD
+                Manage Products
               </button>
             </NavLink>
           </div>

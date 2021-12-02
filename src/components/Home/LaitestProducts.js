@@ -35,7 +35,7 @@ const LaitestProducts = () => {
                 <div className="text-center mb-3">
                   <h5 className="text-danger">Price: ${product.price}</h5>
                   <NavLink to={`/productdetails/${product._id}`}>
-                    <button className="m-1 border-0 rounded bg-dark text-white px-3 py-1">
+                    <button className="mb-2 border-0 rounded bg-dark text-white px-3 py-1">
                       More Details & Buy
                     </button>
                   </NavLink>

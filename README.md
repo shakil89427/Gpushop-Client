@@ -1,25 +1,21 @@
-# Created for Assaignment 12
+# Simple Ecommerce Website
 
 ## Used to Create
 
-Html,css,react,node js,mongodb
+### `React Js,React Router V6,Node Js,Bootstrap,CSS,Express Js,MongoDB,Axios,React Slick,Firebase`
 
-### `Created by`
+### `Developed by Shakil Ahmed`
 
-Shakil Ahmed
+### `Start Date 13-11-2021`
 
-### `Created Date`
+### `Live Site Link [Gpushop](https://gpushop.netlify.app/)`
 
-13-11-2021
+### `Fully Responsive so compatible with almost every devices`
 
-### `Live Site Link`
+### `User can create account and login via username and password`
 
-https://gpushop-247.netlify.app/
+### `Google signin method also included`
 
-### `About`
+### `Registered Users can see details,order product,cancel order,write review and many more`
 
-Website is about single catagory product
-
-### `Login method`
-
-Google and email,password
+### `Admin panel also included for add or remove products,change orders status,cancel orders,promote a registered users to Admin and many more`

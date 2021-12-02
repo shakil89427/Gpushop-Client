@@ -9,17 +9,21 @@ const Pay = () => {
   const [data, setdata] = useState();
   const [price, setprice] = useState();
   const [quantity, setquantity] = useState();
-  const [home, sethome] = useState(false);
   const { user } = useAuth();
   const [wait, setWait] = useState(false);
+  const [dataLoading, setdataLoading] = useState(false);
 
   // Data Load Function
   const loadData = () => {
     axios
       .get(`https://salty-spire-32816.herokuapp.com/allcart/${user.uid}`)
-      .then((res) => setProducts(res.data));
+      .then((res) => {
+        setProducts(res.data);
+        setdataLoading(false);
+      });
   };
   useEffect(() => {
+    setdataLoading(true);
     loadData();
   }, []);
 
@@ -70,7 +74,6 @@ const Pay = () => {
     }
   };
 
-  // Manage order Place
   const placeorder = () => {
     if (data.length === 0) {
       alert("No items Added On cart");
@@ -82,7 +85,6 @@ const Pay = () => {
         .then((res) => {
           if (res.data.acknowledged) {
             alert("Order Successfully Placed");
-            sethome(true);
             setWait(false);
             loadData();
           }
@@ -94,6 +96,11 @@ const Pay = () => {
       <h1 className="text-center">Checkout</h1>
       <div className="row ">
         <div className="col-12 col-md-8 col-lg-8 py-5">
+          {dataLoading && (
+            <div className="mt-3 text-center">
+              <Spinner animation="border" />
+            </div>
+          )}
           {products.length === 0 && (
             <p className="text-center">
               You dont have added any product <br />

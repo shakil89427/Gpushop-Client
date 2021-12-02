@@ -1,84 +1,148 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Spinner } from "react-bootstrap";
 
 const AddRemoveProduct = () => {
-    const [products, setProducts] = useState([]);
-    let [data,setdata] = useState({})
+  const [products, setProducts] = useState([]);
+  let [data, setdata] = useState({});
+  const [wait, setWait] = useState(false);
 
-    const loadData= () =>{
-        axios.get("https://salty-spire-32816.herokuapp.com/allproducts")
-        .then((res) => setProducts(res.data));
-    }
-
-    useEffect(() => {
-        loadData()
-  }, []);
-
-  const handleBlur = e =>{
-        const field = e.target.name
-        const value = e.target.value
-        const newData = {...data}
-        newData[field] = value
-        setdata(newData)
-  }
-  const addproduct=e=>{
-        e.preventDefault()
-        axios.post("https://salty-spire-32816.herokuapp.com/addproduct",data)
-        .then(res=>{
-            if(res.data.insertedId){
-                loadData()
-                alert('Added to List')
-                e.target.reset()
-            }
-        })
-  }
-
-  const removepd = id =>{
-      const confirmation = window.confirm('Are You Sure?')
-      if(confirmation){
-        axios.delete(`https://salty-spire-32816.herokuapp.com/delateproduct/${id}`)
-        .then(res=>{
-            if(res.data.deletedCount){
-                loadData()
-                alert('Product Successfully Removed')
-            }
-        })
-      }
+  const loadData = () => {
+    axios
+      .get("https://salty-spire-32816.herokuapp.com/allproducts")
+      .then((res) => {
+        setProducts(res.data);
+        setWait(false);
+      });
   };
 
-    return (
-        <div>
-            <h1 className='connect-h1 text-white text-center'>Add or remove products</h1>
+  useEffect(() => {
+    setWait(true);
+    loadData();
+  }, []);
 
-            <div className="row">
-                <div className="col-7">
-                    <h3 className='text-center border-bottom border-3'>Total Product: {products.length}</h3>
-                    {
-                        products.map(product=> <div key={product._id} className="d-flex align-items-center mb-5 pb-3 border-bottom">
-                            <img className='pr-img me-3' src={product.img} alt="" />
-                            <div className="">
-                                <h5>{product.name}</h5>
-                                <p>{product.description}</p>
-                                <button onClick={()=>removepd(product._id)} className='remove'>Remove</button>
-                            </div>
-                        </div> )
-                    }
-                </div>
+  const handleBlur = (e) => {
+    const field = e.target.name;
+    const value = e.target.value;
+    const newData = { ...data };
+    newData[field] = value;
+    setdata(newData);
+  };
+  const addproduct = (e) => {
+    e.preventDefault();
+    axios
+      .post("https://salty-spire-32816.herokuapp.com/addproduct", data)
+      .then((res) => {
+        if (res.data.insertedId) {
+          loadData();
+          alert("Added to List");
+          e.target.reset();
+        }
+      });
+  };
 
-                <div className="col-5 text-center">
-                    <h2>Add a product</h2>
-                    <form onSubmit={addproduct}>
-                        <input onBlur={handleBlur} className='addinput' required type="text" name="name" id="" placeholder='Product Name'/> <br />
-                        <input onBlur={handleBlur} className='addinput' required type="text" name="img" id="" placeholder='Product Image Link'/> <br />
-                        <input onBlur={handleBlur} className='addinput' required type="number" name="price" id="" placeholder='Product Price'/> <br />
-                        <input onBlur={handleBlur} className='addinput' required type="text" name="description" id="" placeholder='Product Details'/> <br />
-                        <button className='s-btn' type='submit'>Add To List</button>
-                    </form>
-                </div>
-            </div>
+  const removepd = (id) => {
+    const confirmation = window.confirm("Are You Sure?");
+    if (confirmation) {
+      axios
+        .delete(`https://salty-spire-32816.herokuapp.com/delateproduct/${id}`)
+        .then((res) => {
+          if (res.data.deletedCount) {
+            loadData();
+            alert("Product Successfully Removed");
+          }
+        });
+    }
+  };
 
+  return (
+    <div>
+      <h1 className="text-center">Add or remove products</h1>
+      <hr />
+
+      <div className="row container mx-auto">
+        <div className="col-12 col-md-4 col-lg-3 text-center px-2">
+          <h3>Add a product</h3>
+          <hr className="w-50 mx-auto pb-1" />
+          <form onSubmit={addproduct}>
+            <input
+              onBlur={handleBlur}
+              className="w-100 border-0 shadow px-3 rounded py-1 my-2"
+              required
+              type="text"
+              name="name"
+              id=""
+              placeholder="Product Name"
+            />
+
+            <input
+              onBlur={handleBlur}
+              className="w-100 border-0 shadow px-3 rounded py-1 my-2"
+              required
+              type="text"
+              name="img"
+              id=""
+              placeholder="Product Image Link"
+            />
+
+            <input
+              onBlur={handleBlur}
+              className="w-100 border-0 shadow px-3 rounded py-1 my-2"
+              required
+              type="number"
+              name="price"
+              id=""
+              placeholder="Product Price"
+            />
+
+            <textarea
+              className="w-100 border-0 shadow px-3 rounded py-1 my-2"
+              onBlur={handleBlur}
+              required
+              name="description"
+              placeholder="Product Details"
+              rows="4"
+            ></textarea>
+
+            <button
+              className="m-1 border-0 rounded bg-dark text-white px-3 py-1"
+              type="submit"
+            >
+              Add To List
+            </button>
+          </form>
         </div>
-    );
+
+        <div className="col-12 col-md-8 col-lg-9">
+          <h3 className="text-center">Remove Product: {products.length}</h3>
+          <hr className="w-50 mx-auto pb-1" />
+          {wait && (
+            <div className="mt-3 text-center">
+              <Spinner animation="border" />
+            </div>
+          )}
+          {products.map((product) => (
+            <div
+              key={product._id}
+              className="d-flex align-items-center mb-2 pb-1 border-bottom"
+            >
+              <img className="pr-img me-2" src={product.img} alt="" />
+              <div className="">
+                <h5>{product.name}</h5>
+                <p>{product.description}</p>
+                <button
+                  onClick={() => removepd(product._id)}
+                  className="m-1 border-0 rounded bg-dark text-white px-3 py-1"
+                >
+                  Remove
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default AddRemoveProduct;

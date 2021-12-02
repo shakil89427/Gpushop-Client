@@ -11,6 +11,8 @@ const Myprofile = () => {
         <h5>Name: {user.displayName}</h5>
         <h5>Email: {user.email}</h5>
         <h5>Role: {user.role}</h5>
+        <h5>Uid: {user.uid}</h5>
+        <h5>ApiKey: {user.apiKey}</h5>
       </div>
     </div>
   );

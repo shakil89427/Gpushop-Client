@@ -8,7 +8,6 @@ import { Spinner } from "react-bootstrap";
 const ProductDetails = () => {
   const [product, setProduct] = useState({});
   const [redirect, setredirect] = useState(false);
-  const [review, setreview] = useState("");
   const { id } = useParams();
   const { user } = useAuth();
   const [wait, setWait] = useState(false);
@@ -17,7 +16,7 @@ const ProductDetails = () => {
     axios
       .get(`https://salty-spire-32816.herokuapp.com/details/${id}`)
       .then((res) => setProduct(res.data));
-  }, []);
+  }, [id]);
 
   const addToCart = () => {
     setWait(true);
@@ -29,19 +28,6 @@ const ProductDetails = () => {
           setWait(false);
           alert("Successfully added to cart");
           setredirect(true);
-        }
-      });
-  };
-
-  const addreview = (e) => {
-    e.preventDefault();
-    const info = { username: user.displayName, feedback: review };
-    axios
-      .post("https://salty-spire-32816.herokuapp.com/addreview", info)
-      .then((res) => {
-        if (res.data.acknowledged) {
-          alert("Review Successfully Added");
-          e.target.reset();
         }
       });
   };
