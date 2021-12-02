@@ -1,6 +1,33 @@
 import React from "react";
+import emailjs from "emailjs-com";
+import { useState } from "react";
+import { Spinner } from "react-bootstrap";
 
 const Contact = () => {
+  const [wait, setWait] = useState(false);
+  const sendEmail = (e) => {
+    e.preventDefault();
+    setWait(true);
+    emailjs
+      .sendForm(
+        process.env.REACT_APP_EMAILJS_SERVICE_NAME,
+        process.env.REACT_APP_EMAILJS_TEMPLATE,
+        e.target,
+        process.env.REACT_APP_EMAILJS_UID
+      )
+      .then(
+        (result) => {
+          if (result) {
+            e.target.reset();
+            setWait(false);
+            alert("Messages Successfully Sended");
+          }
+        },
+        (error) => {
+          setWait(false);
+        }
+      );
+  };
   return (
     <div className="mt-5 row">
       <h1 className="text-center">Looking to Find Out More?</h1>
@@ -24,32 +51,46 @@ const Contact = () => {
       </div>
 
       <div className="text-center col-12 col-md-5 col-lg-4">
-        <div className="x-3">
+        <form onSubmit={sendEmail}>
           <input
+            name="name"
+            required
             className="w-100 mb-2 shadow rounded border-0 p-1"
             placeholder="Your Name"
             type="text"
           />
           <input
+            name="email"
+            required
             className="w-100 mb-2 shadow rounded border-0 p-1"
             placeholder="Your Email"
-            type="number"
-          />
-          <input
-            className="w-100 mb-2 shadow rounded border-0 p-1"
-            placeholder="Subject"
             type="email"
           />
+          <input
+            name="subject"
+            className="w-100 mb-2 shadow rounded border-0 p-1"
+            placeholder="Subject"
+            type="text"
+          />
           <textarea
+            required
+            name="messages"
             placeholder="Your Message"
             className="w-100 mb-2 shadow rounded border-0 p-1"
             rows="4"
           ></textarea>
           <br />
-          <button className="mt-1 border-0 rounded bg-dark w-50 text-white px-3 py-1">
-            Send
-          </button>
-        </div>
+          {wait ? (
+            <Spinner animation="border" />
+          ) : (
+            <button
+              type="submit"
+              className="mt-1 border-0 rounded bg-dark w-50 text-white px-3 py-1"
+            >
+              Send
+            </button>
+          )}
+        </form>
       </div>
     </div>
   );
