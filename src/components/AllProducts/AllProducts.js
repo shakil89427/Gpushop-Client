@@ -28,7 +28,7 @@ const AllProducts = () => {
                 <span>
                   <h6 className="text-danger">Price: ${product.price}</h6>
                   <NavLink to={`/productdetails/${product._id}`}>
-                    <button className="mb-2 shadow border-0 rounded bg-white px-3 py-1">
+                    <button className="mb-2 border-0 rounded bg-dark text-white px-3 py-1">
                       More Details & Buy
                     </button>
                   </NavLink>

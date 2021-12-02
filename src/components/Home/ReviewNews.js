@@ -54,7 +54,7 @@ const ReviewNews = () => {
       <div className=" col-12 col-md-12 col-lg-6 mx-auto my-2 text-center">
         <div className="border-top border-5 shadow">
           <h2 className="text-center">Write a Review</h2>
-          <hr className="w-50 py-1 mx-auto rounded mt-0 mb-1" />
+          <hr className="w-25 py-1 mx-auto rounded mt-0 mb-1" />
           <textarea className="shadow w-75 border-0" rows="3"></textarea>
           <br />
           <button className="my-2 border-0 bg-dark text-white w-25 rounded px-3 py-2">
