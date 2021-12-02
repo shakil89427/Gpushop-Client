@@ -20,7 +20,7 @@ const Signup = () => {
     e.preventDefault();
     if (userdata.password === userdata.password2) {
       if (userdata.password.length < 6) {
-        alert("hi");
+        alert("Password should be minimum 6 character");
       } else {
         setloading(true);
         axios
@@ -35,6 +35,8 @@ const Signup = () => {
             e.target.reset();
           });
       }
+    } else {
+      alert("Password didn't matched");
     }
   };
   return (
