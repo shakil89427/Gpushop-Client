@@ -1,14 +1,12 @@
 # Simple And Fully Dynamic Ecommerce Website
 
-## Used to Create
+## Used React Js,React Router V6,Node Js,Bootstrap,CSS,Express Js,MongoDB,Axios,React Slick,Firebase
 
-## React Js,React Router V6,Node Js,Bootstrap,CSS,Express Js,MongoDB,Axios,React Slick,Firebase
+Live Site Link [Gpushop](https://gpushop.netlify.app/)
 
 ### `Developed by Shakil Ahmed`
 
 ### `Start Date 13-11-2021`
-
-Live Site Link [Gpushop](https://gpushop.netlify.app/)
 
 ### `Fully Responsive so compatible with almost every devices`
 
