@@ -1,13 +1,35 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
 import { Navigate } from "react-router";
 import useAuth from "../AuthProvider/useAuth";
+import { ToastContainer, toast, Slide } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Signup = () => {
-  const { user, register, loading, setloading } = useAuth();
+  const { user, loading, setloading, issue, setIssue, registerWithEmail } =
+    useAuth();
   const [userdata, setuserdata] = useState({});
 
+  /* For Error Handeling */
+  useEffect(() => {
+    if (issue) {
+      toast.error(issue, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        theme: "colored",
+        transition: Slide,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      });
+      setIssue(false);
+    }
+  }, [issue]);
+
+  /* Get Inputes Value */
   const handleChange = (e) => {
     const field = e.target.name;
     const value = e.target.value;
@@ -16,32 +38,67 @@ const Signup = () => {
     setuserdata(newData);
   };
 
+  /* Registration function Start */
   const registerdata = (e) => {
     e.preventDefault();
-    if (userdata.password === userdata.password2) {
-      if (userdata.password.length < 6) {
-        alert("Password should be minimum 6 character");
-      } else {
-        setloading(true);
-        axios
-          .post("https://salty-spire-32816.herokuapp.com/finduser", userdata)
-          .then((res) => {
-            if (!res.data._id) {
-              register(userdata);
-            } else {
-              setloading(false);
-              alert("Email already Exists");
-            }
-            e.target.reset();
-          });
-      }
-    } else {
-      alert("Password didn't matched");
+
+    /* Password Checking Start */
+    if (userdata.password !== userdata.password2) {
+      return toast.warn("password Didn't matched", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        theme: "colored",
+        transition: Slide,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      });
     }
+    if (userdata.password.length < 6) {
+      return toast.warn("password must be minimum 6 character", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        theme: "colored",
+        transition: Slide,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+    /* Password checking End */
+
+    setloading(true);
+    axios
+      .post("https://salty-spire-32816.herokuapp.com/finduser", userdata)
+      .then((res) => {
+        if (res.data.insertedId) {
+          /* Main Registration function */
+          registerWithEmail(userdata);
+        } else {
+          setloading(false);
+          toast.warn("Email Already exist Please login", {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            theme: "colored",
+            transition: Slide,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+          });
+        }
+      });
   };
+  /* Registration function End */
+
   return (
     <div className="text-center container mx-auto my-3 p-5">
-      {loading && <Spinner className="mb-3" animation="border" />}
+      <ToastContainer />
       <div className="shadow-lg rounded">
         <h1>Please Signup</h1>
         <form onSubmit={registerdata}>
@@ -50,7 +107,7 @@ const Signup = () => {
             required
             style={{ width: "350px" }}
             className="logreg-form bg-white shadow border-0 my-2 p-2 rounded"
-            name="displayName"
+            name="name"
             type="text"
             placeholder="Type your Name"
           />
@@ -85,16 +142,19 @@ const Signup = () => {
             placeholder="Retype your password"
           />
           <br />
-          <button
-            disabled={loading}
-            type="submit"
-            className="my-3 border-0 rounded bg-dark text-white px-5 py-2"
-          >
-            Signup
-          </button>
+          {loading ? (
+            <Spinner className="my-3" animation="border" />
+          ) : (
+            <button
+              type="submit"
+              className="my-3 border-0 rounded bg-dark text-white px-5 py-2"
+            >
+              Signup
+            </button>
+          )}
         </form>
       </div>
-      {user.email && <Navigate to="/dashboard" />}
+      {user.name && <Navigate to="/dashboard" />}
     </div>
   );
 };

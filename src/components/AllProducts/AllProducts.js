@@ -5,16 +5,24 @@ import { NavLink } from "react-router-dom";
 
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
+  const [wait, setWait] = useState(false);
+
+  /* Load data from server */
   useEffect(() => {
+    setWait(true);
     axios
       .get("https://salty-spire-32816.herokuapp.com/allproducts")
-      .then((res) => setProducts(res.data));
+      .then((res) => {
+        setProducts(res.data);
+        setWait(false);
+      });
   }, []);
+
   return (
     <div className="">
       <h1 className="fw-bolder text-center mt-3">All Available Products</h1>
       <hr className=" w-25 py-1 mx-auto rounded mt-0" />
-      {products.length === 0 ? (
+      {wait ? (
         <div className="my-5 py-5 text-center">
           <Spinner animation="border" />
         </div>

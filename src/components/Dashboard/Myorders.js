@@ -2,11 +2,15 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
 import useAuth from "../AuthProvider/useAuth";
+import { ToastContainer, toast, Slide } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Myorders = () => {
   const { user } = useAuth();
   const [orders, setorders] = useState([]);
   const [wait, setWait] = useState(false);
+
+  /* Load data from server */
   const loadData = () => {
     axios
       .get(`https://salty-spire-32816.herokuapp.com/myorders/${user.email}`)
@@ -21,6 +25,7 @@ const Myorders = () => {
     loadData();
   }, []);
 
+  /* Cancel order function */
   const cancel = (id) => {
     const confirmation = window.confirm("Are you sure?");
     if (confirmation) {
@@ -29,7 +34,17 @@ const Myorders = () => {
         .then((res) => {
           if (res.data.deletedCount) {
             loadData();
-            alert("order successfully cancelled");
+            toast.success("Order Successfully cancelled", {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              theme: "colored",
+              transition: Slide,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+            });
           }
         });
     }
@@ -37,6 +52,7 @@ const Myorders = () => {
 
   return (
     <div>
+      <ToastContainer />
       <h1 className="text-center">Your Orders</h1>
       <hr className="w-25 pb-1 mx-auto rounded mt-0" />
       {wait && (

@@ -1,12 +1,16 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
+import { ToastContainer, toast, Slide } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AddRemoveProduct = () => {
   const [products, setProducts] = useState([]);
   let [data, setdata] = useState({});
   const [wait, setWait] = useState(false);
+  const [add, setAdd] = useState(false);
 
+  /* Load data from server */
   const loadData = () => {
     axios
       .get("https://salty-spire-32816.herokuapp.com/allproducts")
@@ -21,6 +25,7 @@ const AddRemoveProduct = () => {
     loadData();
   }, []);
 
+  /* Get data from inputes value */
   const handleBlur = (e) => {
     const field = e.target.name;
     const value = e.target.value;
@@ -28,19 +33,34 @@ const AddRemoveProduct = () => {
     newData[field] = value;
     setdata(newData);
   };
+
+  /* Add product function */
   const addproduct = (e) => {
+    setAdd(true);
     e.preventDefault();
     axios
       .post("https://salty-spire-32816.herokuapp.com/addproduct", data)
       .then((res) => {
         if (res.data.insertedId) {
           loadData();
-          alert("Added to List");
           e.target.reset();
+          toast.success("Product Added", {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            theme: "colored",
+            transition: Slide,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+          });
         }
+        setAdd(false);
       });
   };
 
+  /* Remove product function */
   const removepd = (id) => {
     const confirmation = window.confirm("Are You Sure?");
     if (confirmation) {
@@ -49,7 +69,17 @@ const AddRemoveProduct = () => {
         .then((res) => {
           if (res.data.deletedCount) {
             loadData();
-            alert("Product Successfully Removed");
+            toast.success("Product Successfully Removed", {
+              position: "top-center",
+              autoClose: 3000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              theme: "colored",
+              transition: Slide,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+            });
           }
         });
     }
@@ -57,10 +87,11 @@ const AddRemoveProduct = () => {
 
   return (
     <div>
+      <ToastContainer />
       <h1 className="text-center">Add or remove products</h1>
       <hr />
-
       <div className="row container mx-auto">
+        {/* Add product Start */}
         <div className="col-12 col-md-4 col-lg-3 text-center px-2">
           <h3>Add a product</h3>
           <hr className="w-50 mx-auto pb-1" />
@@ -103,16 +134,23 @@ const AddRemoveProduct = () => {
               placeholder="Product Details"
               rows="4"
             ></textarea>
-
-            <button
-              className="m-1 border-0 rounded bg-dark text-white px-3 py-1"
-              type="submit"
-            >
-              Add To List
-            </button>
+            {add ? (
+              <div className="m-1 text-center">
+                <Spinner animation="border" />
+              </div>
+            ) : (
+              <button
+                className="m-1 border-0 rounded bg-dark text-white px-3 py-1"
+                type="submit"
+              >
+                Add To List
+              </button>
+            )}
           </form>
         </div>
+        {/* Add product End */}
 
+        {/* Remove Product Start */}
         <div className="col-12 col-md-8 col-lg-9">
           <h3 className="text-center">Remove Product: {products.length}</h3>
           <hr className="w-50 mx-auto pb-1" />
@@ -140,6 +178,7 @@ const AddRemoveProduct = () => {
             </div>
           ))}
         </div>
+        {/* Remove Product End */}
       </div>
     </div>
   );

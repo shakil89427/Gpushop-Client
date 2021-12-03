@@ -2,9 +2,13 @@ import React from "react";
 import emailjs from "emailjs-com";
 import { useState } from "react";
 import { Spinner } from "react-bootstrap";
+import { ToastContainer, toast, Slide } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Contact = () => {
   const [wait, setWait] = useState(false);
+
+  /* Send email function start */
   const sendEmail = (e) => {
     e.preventDefault();
     setWait(true);
@@ -20,7 +24,17 @@ const Contact = () => {
           if (result) {
             e.target.reset();
             setWait(false);
-            alert("Messages Successfully Sended");
+            toast.success("Message Successfully Sended", {
+              position: "top-center",
+              autoClose: 3000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              theme: "colored",
+              transition: Slide,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+            });
           }
         },
         (error) => {
@@ -28,8 +42,11 @@ const Contact = () => {
         }
       );
   };
+  /* Send email function End */
+
   return (
     <div className="mt-5 row">
+      <ToastContainer />
       <h1 className="text-center">Looking to Find Out More?</h1>
       <div className="col-12 col-md-7 col-lg-8 mb-3">
         <div className="p-3 shadow rounded text-center">

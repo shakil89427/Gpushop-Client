@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import useAuth from "../AuthProvider/useAuth";
+import { ToastContainer, toast, Slide } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Pay = () => {
   const [products, setProducts] = useState([]);
@@ -13,7 +15,7 @@ const Pay = () => {
   const [wait, setWait] = useState(false);
   const [dataLoading, setdataLoading] = useState(false);
 
-  // Data Load Function
+  /* Data Load Function */
   const loadData = () => {
     axios
       .get(`https://salty-spire-32816.herokuapp.com/allcart/${user.uid}`)
@@ -27,7 +29,7 @@ const Pay = () => {
     loadData();
   }, []);
 
-  // Calculate Function
+  /* Calculate Function */
   const calculate = () => {
     let gprice = 0;
     let gquantity = 0;
@@ -43,10 +45,10 @@ const Pay = () => {
     calculate();
   }, [products]);
 
-  // Order Modify Function
+  /* Order Modify Function */
   const modify = () => {
     const newdata = [];
-    products.map((product) => {
+    products.forEach((product) => {
       const { _id, ...rest } = product;
       rest.useremail = user.email;
       rest.status = "pending";
@@ -58,7 +60,7 @@ const Pay = () => {
     modify();
   }, [products]);
 
-  // Remove From Cart
+  /*   Remove From Cart */
   const remove = (id) => {
     const permition = window.confirm("Are u Sure?");
     if (permition) {
@@ -69,30 +71,63 @@ const Pay = () => {
         .then((res) => {
           if (res.data.deletedCount) {
             loadData();
+            toast.success("Successfully removed", {
+              position: "top-center",
+              autoClose: 3000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              theme: "colored",
+              transition: Slide,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+            });
           }
         });
     }
   };
 
+  /* Place order */
   const placeorder = () => {
     if (data.length === 0) {
-      alert("No items Added On cart");
-      return;
+      return toast.warn("No items added on Cart", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        theme: "colored",
+        transition: Slide,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      });
     } else {
       setWait(true);
       axios
         .post("https://salty-spire-32816.herokuapp.com/placeorder", data)
         .then((res) => {
           if (res.data.acknowledged) {
-            alert("Order Successfully Placed");
             setWait(false);
             loadData();
+            toast.success("Order Placed Successfully", {
+              position: "top-center",
+              autoClose: 3000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              theme: "colored",
+              transition: Slide,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+            });
           }
         });
     }
   };
+
   return (
     <div className="container pb-5">
+      <ToastContainer />
       <h1 className="text-center">Checkout</h1>
       <div className="row ">
         <div className="col-12 col-md-8 col-lg-8 py-5">

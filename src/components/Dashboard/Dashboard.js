@@ -3,11 +3,13 @@ import { NavLink, Outlet } from "react-router-dom";
 import useAuth from "../AuthProvider/useAuth";
 import Myprofile from "./Myprofile";
 
+/* Mother part of all part which are related to dashboard */
 const Dashboard = () => {
   const { user, logout } = useAuth();
   const [btndefault, setbtndefault] = useState(false);
   return (
     <div className="row mt-1 mx-auto">
+      {/* Admin Part Start */}
       {user.role === "Admin" && (
         <span className="shadow row mx-auto text-center">
           <div className="col-4 col-md-2 col-lg-2 p-0">
@@ -70,6 +72,9 @@ const Dashboard = () => {
           </div>
         </span>
       )}
+      {/* Admin Part End */}
+
+      {/* User Part Start */}
       {user.role === "user" && (
         <span className="shadow-lg d-flex justify-content-center row mx-auto text-center">
           <div className="col-4 col-md-2 col-lg-2 p-0">
@@ -115,6 +120,9 @@ const Dashboard = () => {
           </div>
         </span>
       )}
+      {/* User Part Start */}
+
+      {/* Outlet part for nested routes */}
       <div className="col-12 col-md-3 col-lg-3 "></div>
       <div>{btndefault ? <Outlet /> : <Myprofile></Myprofile>}</div>
     </div>

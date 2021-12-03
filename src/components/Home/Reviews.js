@@ -7,11 +7,16 @@ import { Spinner } from "react-bootstrap";
 
 const Reviews = () => {
   const [reviews, setreviews] = useState([]);
+  const [wait, setWait] = useState(false);
 
   useEffect(() => {
+    setWait(true);
     axios
       .get("https://salty-spire-32816.herokuapp.com/allreviews")
-      .then((res) => setreviews(res.data));
+      .then((res) => {
+        setreviews(res.data);
+        setWait(false);
+      });
   }, []);
 
   const settings = {
@@ -56,7 +61,7 @@ const Reviews = () => {
     <div className="mt-5 border-top border-5 shadow-lg ">
       <h2 className="text-center mx-auto">Reviews</h2>
       <hr className="w-25 pb-1 mx-auto rounded mt-0 " />
-      {reviews.length === 0 ? (
+      {wait ? (
         <div className="mt-5 text-center">
           <Spinner animation="border" />
         </div>

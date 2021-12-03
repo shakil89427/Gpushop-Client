@@ -1,15 +1,43 @@
-import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
 import { Navigate, useLocation } from "react-router";
 import useAuth from "../AuthProvider/useAuth";
+import { ToastContainer, toast, Slide } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
-  const { user, emailsign, setloading, loading, signInUsingGoogle } = useAuth();
+  const {
+    user,
+    issue,
+    setIssue,
+    loading,
+    setloading,
+    loginWithEmail,
+    signInUsingGoogle,
+  } = useAuth();
   const getlocation = useLocation();
   const path = getlocation?.state?.location;
   const [userdata, setuserdata] = useState({});
 
+  /* Error Handeling */
+  useEffect(() => {
+    if (issue) {
+      toast.error(issue, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        theme: "colored",
+        transition: Slide,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      });
+      setIssue(false);
+    }
+  }, [issue]);
+
+  /* Get inputes Value */
   const handleChange = (e) => {
     const field = e.target.name;
     const value = e.target.value;
@@ -18,33 +46,47 @@ const Login = () => {
     setuserdata(newData);
   };
 
+  /* Login With Email and password Start */
   const login = (e) => {
     e.preventDefault();
-    if (userdata.password === userdata.password2) {
-      if (userdata.password.length < 6) {
-        alert("6");
-      } else {
-        setloading(true);
-        axios
-          .post("https://salty-spire-32816.herokuapp.com/finduser/", userdata)
-          .then((res) => {
-            if (!res.data) {
-              setloading(false);
-              alert("User not exists");
-              e.target.reset();
-            } else {
-              emailsign(userdata);
-              e.target.reset();
-            }
-          });
-      }
-    } else {
-      alert("didnt matched");
+
+    /* Password checking start */
+    if (userdata.password !== userdata.password2) {
+      return toast.warn("Password Didn't matched", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        theme: "colored",
+        transition: Slide,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      });
     }
+    if (userdata.password.length < 6) {
+      return toast.warn("Password must be minimum 6 character", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        theme: "colored",
+        transition: Slide,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+    /* Password checking End */
+
+    setloading(true);
+    loginWithEmail(userdata);
   };
+  /* Login With Email and password End */
 
   return (
     <div className="text-center container mx-auto my-3 p-5">
+      <ToastContainer />
       {loading && <Spinner className="mb-3" animation="border" />}
       <div className="shadow-lg rounded">
         <h1 className="w-50 mx-auto">Please Login</h1>
@@ -97,8 +139,10 @@ const Login = () => {
           Google Login
         </button>
       </div>
-      {user.email && path && <Navigate to={path} />}
-      {user.email && !path && <Navigate to="/dashboard" />}
+      {user.name && path && <Navigate to={path} />}
+      {user.name && !path && <Navigate to="/dashboard" />}
+      {user.displayName && path && <Navigate to={path} />}
+      {user.displayName && !path && <Navigate to="/dashboard" />}
     </div>
   );
 };

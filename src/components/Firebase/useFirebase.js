@@ -12,13 +12,16 @@ import { useEffect, useState } from "react";
 import firebaseinit from "./firebaseinit";
 
 firebaseinit();
+
 const useFirebase = () => {
   const [user, setuser] = useState({});
   const [loading, setloading] = useState(true);
+  const [issue, setIssue] = useState(false);
 
   const auth = getAuth();
 
-  const loadData = (newData) => {
+  /* Update or get data from database */
+  const updateData = (newData) => {
     axios
       .post("https://salty-spire-32816.herokuapp.com/adduser", newData)
       .then((res) => {
@@ -27,35 +30,43 @@ const useFirebase = () => {
       });
   };
 
-  const register = (userdata) => {
-    setloading(true);
+  /* Email and password register function */
+  const registerWithEmail = (userdata) => {
     createUserWithEmailAndPassword(auth, userdata.email, userdata.password)
-      .then((res) => {
-        setuser(res.user);
-      })
-      .catch((err) => alert(err));
+      .then((res) => {})
+      .catch((err) => {
+        setIssue(err.message);
+        setloading(false);
+      });
   };
 
-  const emailsign = (logindata) => {
-    signInWithEmailAndPassword(auth, logindata.email, logindata.password)
-      .then((res) => {
-        setuser(res.user);
-      })
-      .catch((err) => alert(err));
+  /* Email and password login function */
+  const loginWithEmail = (userdata) => {
+    signInWithEmailAndPassword(auth, userdata.email, userdata.password)
+      .then((res) => {})
+      .catch((err) => {
+        setIssue(err.message);
+        setloading(false);
+      });
   };
 
+  /* Google Signin Function */
   const signInUsingGoogle = () => {
     setloading(true);
     const googleProvider = new GoogleAuthProvider();
     signInWithPopup(auth, googleProvider)
-      .then((result) => setuser(result.user))
-      .catch((err) => alert(err));
+      .then((result) => {})
+      .catch((err) => {
+        setIssue(err.message);
+        setloading(false);
+      });
   };
 
+  /* Checkup on Auth */
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        loadData(user);
+        updateData(user);
       } else {
         setuser({});
         setloading(false);
@@ -63,21 +74,27 @@ const useFirebase = () => {
     });
   }, [auth]);
 
+  /* Logout Function */
   const logout = () => {
     setloading(true);
     signOut(auth)
       .then(() => setuser({}))
-      .catch((err) => alert(err))
-      .finally(() => setloading(false));
+      .catch((err) => {
+        setIssue(err.message);
+        setloading(false);
+      });
   };
 
+  /* Returned Values */
   return {
     user,
-    setloading,
     loading,
+    setloading,
+    issue,
+    setIssue,
+    registerWithEmail,
+    loginWithEmail,
     signInUsingGoogle,
-    emailsign,
-    register,
     logout,
   };
 };

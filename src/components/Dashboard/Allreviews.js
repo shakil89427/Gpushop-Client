@@ -1,11 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
+import { ToastContainer, toast, Slide } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Allreviews = () => {
   const [reviews, setreviews] = useState([]);
   const [wait, setWait] = useState(false);
 
+  /* Load data from server */
   const loadData = () => {
     axios
       .get("https://salty-spire-32816.herokuapp.com/allreviews")
@@ -20,6 +23,7 @@ const Allreviews = () => {
     loadData();
   }, []);
 
+  /* Delate a review */
   const revdelate = (id) => {
     const confirmation = window.confirm("AAre you Sure");
     if (confirmation) {
@@ -28,7 +32,17 @@ const Allreviews = () => {
         .then((res) => {
           if (res.data.deletedCount) {
             loadData();
-            alert("Successfully Deleted");
+            toast.success("Successfully Delated", {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              theme: "colored",
+              transition: Slide,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+            });
           }
         });
     }
@@ -36,6 +50,7 @@ const Allreviews = () => {
 
   return (
     <div>
+      <ToastContainer className="pt-0" />
       <h1 className="text-center">Manage All Reviews</h1>
       <hr className="w-50 mx-auto pb-1" />
       {wait && (

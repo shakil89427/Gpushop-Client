@@ -1,6 +1,6 @@
 # Simple And Fully Dynamic Ecommerce Website
 
-## Used React Js,React Router V6,Node Js,Bootstrap,CSS,Express Js,MongoDB,Axios,React Slick,Firebase,Email Js
+## Used React Js,React Router V6,Node Js,Bootstrap,CSS,Express Js,MongoDB,Axios,React Slick,Firebase,Email Js,React Toastify
 
 Live Site Link [Gpushop](https://gpushop.netlify.app/)
 

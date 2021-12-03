@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import useAuth from "../AuthProvider/useAuth";
-import logo from "./logo.png";
+import logo from "../../images/headerLogo.png";
 
 const Header = () => {
   const { user, logout } = useAuth();
@@ -25,8 +25,11 @@ const Header = () => {
 
                 {user.displayName && (
                   <small className="fw-light m-0 p-0">
-                    Hello: {user.displayName}
+                    Hello, {user.displayName}
                   </small>
+                )}
+                {user.name && (
+                  <small className="fw-light m-0 p-0">Hello, {user.name}</small>
                 )}
               </div>
             </div>

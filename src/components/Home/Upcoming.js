@@ -4,11 +4,16 @@ import { Spinner } from "react-bootstrap";
 
 const Upcoming = () => {
   const [upcoming, setUpcoming] = useState([]);
+  const [wait, setWait] = useState(false);
 
   useEffect(() => {
+    setWait(true);
     axios
       .get("https://salty-spire-32816.herokuapp.com/upcoming")
-      .then((res) => setUpcoming(res.data));
+      .then((res) => {
+        setUpcoming(res.data);
+        setWait(false);
+      });
   }, []);
 
   return (
@@ -16,7 +21,7 @@ const Upcoming = () => {
       <div>
         <h1 className="fw-bolder text-center mt-3">Upcoming Products</h1>
         <hr className="w-25 py-1 mx-auto rounded mt-0" />
-        {upcoming.length === 0 ? (
+        {wait ? (
           <div className="my-5 py-5 text-center">
             <Spinner animation="border" />
           </div>
