@@ -5,20 +5,23 @@ import { NavLink } from "react-router-dom";
 import useAuth from "../AuthProvider/useAuth";
 import { ToastContainer, toast, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import CheckoutForm from "./CheckoutForm";
+
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PROMISE_KEY);
 
 const Pay = () => {
   const [products, setProducts] = useState([]);
   const [data, setdata] = useState();
   const [price, setprice] = useState();
-  const [quantity, setquantity] = useState();
   const { user } = useAuth();
-  const [wait, setWait] = useState(false);
   const [dataLoading, setdataLoading] = useState(false);
 
   /* Data Load Function */
   const loadData = () => {
     axios
-      .get(`https://salty-spire-32816.herokuapp.com/allcart/${user.uid}`)
+      .get(`https://gpushop.herokuapp.com/allcart/${user.uid}`)
       .then((res) => {
         setProducts(res.data);
         setdataLoading(false);
@@ -32,14 +35,11 @@ const Pay = () => {
   /* Calculate Function */
   const calculate = () => {
     let gprice = 0;
-    let gquantity = 0;
     for (const product of products) {
       const newprice = product.price * product.quantity;
       gprice = gprice + newprice;
-      gquantity = gquantity + product.quantity;
     }
     setprice(gprice);
-    setquantity(gquantity);
   };
   useEffect(() => {
     calculate();
@@ -66,50 +66,12 @@ const Pay = () => {
     if (permition) {
       axios
         .delete(
-          `https://salty-spire-32816.herokuapp.com/deletefromcart/${id}?uid=${user.uid}`
+          `https://gpushop.herokuapp.com/deletefromcart/${id}?uid=${user.uid}`
         )
         .then((res) => {
           if (res.data.deletedCount) {
             loadData();
             toast.success("Successfully removed", {
-              position: "top-center",
-              autoClose: 3000,
-              hideProgressBar: true,
-              closeOnClick: true,
-              theme: "colored",
-              transition: Slide,
-              pauseOnHover: false,
-              draggable: true,
-              progress: undefined,
-            });
-          }
-        });
-    }
-  };
-
-  /* Place order */
-  const placeorder = () => {
-    if (data.length === 0) {
-      return toast.warn("No items added on Cart", {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        theme: "colored",
-        transition: Slide,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-      });
-    } else {
-      setWait(true);
-      axios
-        .post("https://salty-spire-32816.herokuapp.com/placeorder", data)
-        .then((res) => {
-          if (res.data.acknowledged) {
-            setWait(false);
-            loadData();
-            toast.success("Order Placed Successfully", {
               position: "top-center",
               autoClose: 3000,
               hideProgressBar: true,
@@ -167,16 +129,9 @@ const Pay = () => {
           ))}
         </div>
         <div className="col-12 col-md-4 col-lg-4 text-center py-5">
-          <h5>Total Price: ${price}</h5>
-          <h5>Total Items: {quantity}</h5>
-          <button
-            onClick={placeorder}
-            className="m-1 mb-3 border-0 rounded bg-dark text-white px-3 py-1"
-          >
-            Place order
-          </button>
-          <br />
-          {wait && <Spinner className="my-2" animation="border" />}
+          <Elements stripe={stripePromise}>
+            <CheckoutForm loadData={loadData} price={price} data={data} />
+          </Elements>
         </div>
       </div>
     </div>

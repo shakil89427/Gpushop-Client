@@ -10,12 +10,10 @@ const Allorders = () => {
 
   /* Load data from server */
   const loadData = () => {
-    axios
-      .get("https://salty-spire-32816.herokuapp.com/allorders")
-      .then((res) => {
-        setorders(res.data);
-        setWait(false);
-      });
+    axios.get("https://gpushop.herokuapp.com/allorders").then((res) => {
+      setorders(res.data);
+      setWait(false);
+    });
   };
 
   useEffect(() => {
@@ -26,7 +24,7 @@ const Allorders = () => {
   /* Change pending to Approve status */
   const changestatus = (id) => {
     axios
-      .post(`https://salty-spire-32816.herokuapp.com/changestatus/${id}`)
+      .post(`https://gpushop.herokuapp.com/changestatus/${id}`)
       .then((res) => {
         if (res.data.modifiedCount) {
           loadData();
@@ -50,7 +48,7 @@ const Allorders = () => {
     const confirmation = window.confirm("Are you Sure");
     if (confirmation) {
       axios
-        .delete(`https://salty-spire-32816.herokuapp.com/delateorder/${id}`)
+        .delete(`https://gpushop.herokuapp.com/delateorder/${id}`)
         .then((res) => {
           if (res.data.deletedCount) {
             loadData();

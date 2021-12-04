@@ -10,12 +10,10 @@ const Allreviews = () => {
 
   /* Load data from server */
   const loadData = () => {
-    axios
-      .get("https://salty-spire-32816.herokuapp.com/allreviews")
-      .then((res) => {
-        setreviews(res.data);
-        setWait(false);
-      });
+    axios.get("https://gpushop.herokuapp.com/allreviews").then((res) => {
+      setreviews(res.data);
+      setWait(false);
+    });
   };
 
   useEffect(() => {
@@ -28,7 +26,7 @@ const Allreviews = () => {
     const confirmation = window.confirm("AAre you Sure");
     if (confirmation) {
       axios
-        .delete(`https://salty-spire-32816.herokuapp.com/deletereview/${id}`)
+        .delete(`https://gpushop.herokuapp.com/deletereview/${id}`)
         .then((res) => {
           if (res.data.deletedCount) {
             loadData();

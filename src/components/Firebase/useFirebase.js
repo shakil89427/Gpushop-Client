@@ -22,12 +22,10 @@ const useFirebase = () => {
 
   /* Update or get data from database */
   const updateData = (newData) => {
-    axios
-      .post("https://salty-spire-32816.herokuapp.com/adduser", newData)
-      .then((res) => {
-        setuser(res.data);
-        setloading(false);
-      });
+    axios.post("https://gpushop.herokuapp.com/adduser", newData).then((res) => {
+      setuser(res.data);
+      setloading(false);
+    });
   };
 
   /* Email and password register function */

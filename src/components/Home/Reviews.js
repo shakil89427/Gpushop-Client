@@ -11,12 +11,10 @@ const Reviews = () => {
 
   useEffect(() => {
     setWait(true);
-    axios
-      .get("https://salty-spire-32816.herokuapp.com/allreviews")
-      .then((res) => {
-        setreviews(res.data);
-        setWait(false);
-      });
+    axios.get("https://gpushop.herokuapp.com/allreviews").then((res) => {
+      setreviews(res.data);
+      setWait(false);
+    });
   }, []);
 
   const settings = {

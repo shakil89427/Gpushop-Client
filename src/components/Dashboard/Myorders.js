@@ -13,7 +13,7 @@ const Myorders = () => {
   /* Load data from server */
   const loadData = () => {
     axios
-      .get(`https://salty-spire-32816.herokuapp.com/myorders/${user.email}`)
+      .get(`https://gpushop.herokuapp.com/myorders/${user.email}`)
       .then((res) => {
         setWait(false);
         setorders(res.data);
@@ -30,7 +30,7 @@ const Myorders = () => {
     const confirmation = window.confirm("Are you sure?");
     if (confirmation) {
       axios
-        .delete(`https://salty-spire-32816.herokuapp.com/delateorder/${id}`)
+        .delete(`https://gpushop.herokuapp.com/delateorder/${id}`)
         .then((res) => {
           if (res.data.deletedCount) {
             loadData();

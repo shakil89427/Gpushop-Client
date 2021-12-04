@@ -16,7 +16,7 @@ const MakeAdmin = () => {
     const confirmation = window.confirm("Are you Sure");
     if (confirmation) {
       axios
-        .post(`https://salty-spire-32816.herokuapp.com/makeadmin/${email}`)
+        .post(`https://gpushop.herokuapp.com/makeadmin/${email}`)
         .then((res) => {
           if (!res.data) {
             toast.warn("Sorry User Not Registered", {

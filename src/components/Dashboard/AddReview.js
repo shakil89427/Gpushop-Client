@@ -14,25 +14,23 @@ const AddReview = () => {
     setWait(true);
     e.preventDefault();
     const info = { username: user.displayName, feedback: review };
-    axios
-      .post("https://salty-spire-32816.herokuapp.com/addreview", info)
-      .then((res) => {
-        if (res.data.acknowledged) {
-          toast.success("Your Review is Added", {
-            position: "top-center",
-            autoClose: 3000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            theme: "colored",
-            transition: Slide,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-          });
-          setWait(false);
-          e.target.reset();
-        }
-      });
+    axios.post("https://gpushop.herokuapp.com/addreview", info).then((res) => {
+      if (res.data.acknowledged) {
+        toast.success("Your Review is Added", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          theme: "colored",
+          transition: Slide,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        });
+        setWait(false);
+        e.target.reset();
+      }
+    });
   };
   return (
     <div className="text-center">

@@ -12,12 +12,10 @@ const AddRemoveProduct = () => {
 
   /* Load data from server */
   const loadData = () => {
-    axios
-      .get("https://salty-spire-32816.herokuapp.com/allproducts")
-      .then((res) => {
-        setProducts(res.data);
-        setWait(false);
-      });
+    axios.get("https://gpushop.herokuapp.com/allproducts").then((res) => {
+      setProducts(res.data);
+      setWait(false);
+    });
   };
 
   useEffect(() => {
@@ -38,26 +36,24 @@ const AddRemoveProduct = () => {
   const addproduct = (e) => {
     setAdd(true);
     e.preventDefault();
-    axios
-      .post("https://salty-spire-32816.herokuapp.com/addproduct", data)
-      .then((res) => {
-        if (res.data.insertedId) {
-          loadData();
-          e.target.reset();
-          toast.success("Product Added", {
-            position: "top-center",
-            autoClose: 3000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            theme: "colored",
-            transition: Slide,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-          });
-        }
-        setAdd(false);
-      });
+    axios.post("https://gpushop.herokuapp.com/addproduct", data).then((res) => {
+      if (res.data.insertedId) {
+        loadData();
+        e.target.reset();
+        toast.success("Product Added", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          theme: "colored",
+          transition: Slide,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        });
+      }
+      setAdd(false);
+    });
   };
 
   /* Remove product function */
@@ -65,7 +61,7 @@ const AddRemoveProduct = () => {
     const confirmation = window.confirm("Are You Sure?");
     if (confirmation) {
       axios
-        .delete(`https://salty-spire-32816.herokuapp.com/delateproduct/${id}`)
+        .delete(`https://gpushop.herokuapp.com/delateproduct/${id}`)
         .then((res) => {
           if (res.data.deletedCount) {
             loadData();

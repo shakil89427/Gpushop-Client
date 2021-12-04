@@ -10,12 +10,10 @@ const AllProducts = () => {
   /* Load data from server */
   useEffect(() => {
     setWait(true);
-    axios
-      .get("https://salty-spire-32816.herokuapp.com/allproducts")
-      .then((res) => {
-        setProducts(res.data);
-        setWait(false);
-      });
+    axios.get("https://gpushop.herokuapp.com/allproducts").then((res) => {
+      setProducts(res.data);
+      setWait(false);
+    });
   }, []);
 
   return (

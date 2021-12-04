@@ -18,12 +18,10 @@ const ProductDetails = () => {
   /* Load data from server */
   useEffect(() => {
     setPloading(true);
-    axios
-      .get(`https://salty-spire-32816.herokuapp.com/details/${id}`)
-      .then((res) => {
-        setProduct(res.data);
-        setPloading(false);
-      });
+    axios.get(`https://gpushop.herokuapp.com/details/${id}`).then((res) => {
+      setProduct(res.data);
+      setPloading(false);
+    });
   }, [id]);
 
   /* Add to cart function */
@@ -31,7 +29,7 @@ const ProductDetails = () => {
     setWait(true);
     product.userId = user.uid;
     axios
-      .post("https://salty-spire-32816.herokuapp.com/addtocart", product)
+      .post("https://gpushop.herokuapp.com/addtocart", product)
       .then((res) => {
         if (res.data.acknowledged) {
           setWait(false);

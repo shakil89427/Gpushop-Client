@@ -9,14 +9,12 @@ const LaitestProducts = () => {
 
   useEffect(() => {
     setWait(true);
-    axios
-      .get("https://salty-spire-32816.herokuapp.com/allproducts")
-      .then((res) => {
-        const data = res.data;
-        const newData = data.slice(2, 8);
-        setProducts(newData);
-        setWait(false);
-      });
+    axios.get("https://gpushop.herokuapp.com/allproducts").then((res) => {
+      const data = res.data;
+      const newData = data.slice(2, 8);
+      setProducts(newData);
+      setWait(false);
+    });
   }, []);
 
   return (
