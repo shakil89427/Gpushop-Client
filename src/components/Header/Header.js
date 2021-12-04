@@ -10,49 +10,38 @@ const Header = () => {
     <div className="">
       <Navbar className="bg-dark" collapseOnSelect expand="lg">
         <Container>
-          <NavLink className="text-decoration-none text-dark" to="/">
-            <div className="d-flex align-items-center text-white fw-bolder m-0">
-              <img
-                style={{ width: "20%" }}
-                className="bg-white my-0 me-2 rounded-circle"
-                src={logo}
-                alt=""
-              />
-              <div>
-                <h1 className="m-0">
-                  <em>GPUsHOP</em>
-                </h1>
-
-                {user.displayName && (
-                  <small className="fw-light m-0 p-0">
-                    Hello, {user.displayName}
-                  </small>
-                )}
-                {user.name && (
-                  <small className="fw-light m-0 p-0">Hello, {user.name}</small>
-                )}
-              </div>
-            </div>
-          </NavLink>
+          <div className="d-flex align-items-center">
+            <img
+              style={{ width: "15%" }}
+              className="bg-white rounded-circle"
+              src={logo}
+              alt=""
+            />
+            <NavLink className="text-decoration-none text-white" to="/">
+              <h2 className="ms-2">
+                <em>GPUsHOP</em>
+              </h2>
+            </NavLink>
+          </div>
           <Navbar.Toggle
             className="px-1 py-0 bg-white"
             aria-controls="responsive-navbar-nav"
           />
           <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="text-center ms-auto">
+            <Nav className="flex-row justify-content-center ms-auto">
               <NavLink to="/home">
-                <button className="m-1 border-0 rounded fw-bold bg-white px-3 py-1">
+                <button className="m-1 border-0 rounded fw-bold bg-white">
                   Home
                 </button>
               </NavLink>
               <NavLink to="/allproducts">
-                <button className="m-1 border-0 rounded fw-bold bg-white px-3 py-1">
+                <button className="m-1 border-0 rounded fw-bold bg-white">
                   All Products
                 </button>
               </NavLink>
               {user.email && (
-                <NavLink to="/dashboard">
-                  <button className="m-1 border-0 rounded fw-bold bg-white px-3 py-1">
+                <NavLink to="/dashboard/myprofile">
+                  <button className="m-1 border-0 rounded fw-bold bg-white">
                     Dashboard
                   </button>
                 </NavLink>
@@ -61,7 +50,7 @@ const Header = () => {
                 <Nav.Link className="p-0">
                   <button
                     onClick={logout}
-                    className="m-1 border-0 rounded fw-bold bg-white px-3 py-1"
+                    className="m-1 border-0 rounded fw-bold bg-white"
                   >
                     Logout
                   </button>
@@ -69,12 +58,12 @@ const Header = () => {
               ) : (
                 <span>
                   <NavLink to="/login">
-                    <button className="m-1 border-0 rounded fw-bold bg-white px-3 py-1">
+                    <button className="m-1 border-0 rounded fw-bold bg-white">
                       Login
                     </button>
                   </NavLink>
                   <NavLink to="/signup">
-                    <button className="m-1 border-0 rounded fw-bold bg-white px-3 py-1">
+                    <button className="m-1 border-0 rounded fw-bold bg-white">
                       Signup
                     </button>
                   </NavLink>

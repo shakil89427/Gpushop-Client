@@ -85,9 +85,9 @@ const Login = () => {
   /* Login With Email and password End */
 
   return (
-    <div className="text-center container mx-auto my-3 p-5">
+    <div className="text-center container mx-auto p-5">
       <ToastContainer />
-      {loading && <Spinner className="mb-3" animation="border" />}
+      {loading && <Spinner className="mb-1" animation="border" />}
       <div className="shadow-lg rounded">
         <h1 className="w-50 mx-auto">Please Login</h1>
         <form onSubmit={login}>
@@ -140,9 +140,9 @@ const Login = () => {
         </button>
       </div>
       {user.name && path && <Navigate to={path} />}
-      {user.name && !path && <Navigate to="/dashboard" />}
+      {user.name && !path && <Navigate to="/dashboard/myprofile" />}
       {user.displayName && path && <Navigate to={path} />}
-      {user.displayName && !path && <Navigate to="/dashboard" />}
+      {user.displayName && !path && <Navigate to="/dashboard/myprofile" />}
     </div>
   );
 };

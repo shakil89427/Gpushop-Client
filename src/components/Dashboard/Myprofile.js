@@ -7,12 +7,27 @@ const Myprofile = () => {
     <div>
       <h1 className="text-center">Your Profile</h1>
       <hr className="w-25 pb-1 mx-auto rounded mt-0" />
-      <div className="text-center">
-        <h5>Name: {user.displayName || user.name}</h5>
-        <h5>Email: {user.email}</h5>
-        <h5>Role: {user.role}</h5>
-        <h5>Uid: {user.uid}</h5>
-        <h5>ApiKey: {user.apiKey}</h5>
+      <div className="d-flex justify-content-center">
+        <div className="d-inline-block">
+          <h5 className="m-1">
+            Name
+            <small className="fw-normal">
+              : {user.displayName || user.name}
+            </small>
+          </h5>
+
+          <h5 className="m-1">
+            Email<small className="fw-normal">: {user.email}</small>
+          </h5>
+
+          <h5 className="m-1">
+            Role<small className="fw-normal">: {user.role}</small>
+          </h5>
+
+          <h5 className="m-1">
+            Uid<small className="fw-normal">: {user.uid}</small>
+          </h5>
+        </div>
       </div>
     </div>
   );

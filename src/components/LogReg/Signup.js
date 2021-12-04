@@ -31,11 +31,17 @@ const Signup = () => {
 
   /* Get Inputes Value */
   const handleChange = (e) => {
-    const field = e.target.name;
-    const value = e.target.value;
     const newData = { ...userdata };
-    newData[field] = value;
-    setuserdata(newData);
+    const field = e.target.name;
+    if (field === "email") {
+      const value = e.target.value.toLowerCase();
+      newData[field] = value;
+      setuserdata(newData);
+    } else {
+      const value = e.target.value;
+      newData[field] = value;
+      setuserdata(newData);
+    }
   };
 
   /* Registration function Start */
@@ -97,8 +103,9 @@ const Signup = () => {
   /* Registration function End */
 
   return (
-    <div className="text-center container mx-auto my-3 p-5">
+    <div className="text-center container mx-auto p-5">
       <ToastContainer />
+      {loading && <Spinner className="mb-1" animation="border" />}
       <div className="shadow-lg rounded">
         <h1>Please Signup</h1>
         <form onSubmit={registerdata}>
@@ -142,19 +149,16 @@ const Signup = () => {
             placeholder="Retype your password"
           />
           <br />
-          {loading ? (
-            <Spinner className="my-3" animation="border" />
-          ) : (
-            <button
-              type="submit"
-              className="my-3 border-0 rounded bg-dark text-white px-5 py-2"
-            >
-              Signup
-            </button>
-          )}
+          <button
+            disabled={loading}
+            type="submit"
+            className="my-3 border-0 rounded bg-dark text-white px-5 py-2"
+          >
+            Signup
+          </button>
         </form>
       </div>
-      {user.name && <Navigate to="/dashboard" />}
+      {user.name && <Navigate to="/dashboard/myprofile" />}
     </div>
   );
 };

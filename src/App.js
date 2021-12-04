@@ -27,79 +27,83 @@ function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <Header></Header>
-        <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="home" element={<Home />}></Route>
-          <Route path="login" element={<Login />}></Route>
-          <Route path="signup" element={<Signup />}></Route>
-          <Route path="allproducts" element={<AllProducts />}></Route>
+        <div className="main-div d-flex flex-column justify-content-between">
+          <div>
+            <Header></Header>
+            <Routes>
+              <Route path="/" element={<Home />}></Route>
+              <Route path="home" element={<Home />}></Route>
+              <Route path="login" element={<Login />}></Route>
+              <Route path="signup" element={<Signup />}></Route>
+              <Route path="allproducts" element={<AllProducts />}></Route>
 
-          <Route
-            path="dashboard"
-            element={
-              <PrivateRoute>
-                <Dashboard />
-              </PrivateRoute>
-            }
-          >
-            <Route path="mycart" element={<Mycart />} />
-            <Route path="myorders" element={<Myorders />} />
-            <Route path="myprofile" element={<Myprofile />} />
-            <Route path="addreview" element={<AddReview />} />
-            <Route
-              path="addremove"
-              element={
-                <AdminRoute>
-                  <AddRemoveProduct />
-                </AdminRoute>
-              }
-            />
-            <Route
-              path="allorders"
-              element={
-                <AdminRoute>
-                  <Allorders />
-                </AdminRoute>
-              }
-            />
-            <Route
-              path="allreviews"
-              element={
-                <AdminRoute>
-                  <Allreviews />
-                </AdminRoute>
-              }
-            />
-            <Route
-              path="makeadmin"
-              element={
-                <AdminRoute>
-                  <MakeAdmin />
-                </AdminRoute>
-              }
-            />
-          </Route>
+              <Route
+                path="dashboard"
+                element={
+                  <PrivateRoute>
+                    <Dashboard />
+                  </PrivateRoute>
+                }
+              >
+                <Route path="mycart" element={<Mycart />} />
+                <Route path="myorders" element={<Myorders />} />
+                <Route path="myprofile" element={<Myprofile />} />
+                <Route path="addreview" element={<AddReview />} />
+                <Route
+                  path="addremove"
+                  element={
+                    <AdminRoute>
+                      <AddRemoveProduct />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="allorders"
+                  element={
+                    <AdminRoute>
+                      <Allorders />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="allreviews"
+                  element={
+                    <AdminRoute>
+                      <Allreviews />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="makeadmin"
+                  element={
+                    <AdminRoute>
+                      <MakeAdmin />
+                    </AdminRoute>
+                  }
+                />
+              </Route>
 
-          <Route
-            path="productdetails/:id"
-            element={
-              <PrivateRoute>
-                <ProductDetails />
-              </PrivateRoute>
-            }
-          ></Route>
-          <Route
-            path="pay"
-            element={
-              <PrivateRoute>
-                <Pay />
-              </PrivateRoute>
-            }
-          ></Route>
-          <Route path="*" element={<NotFound />}></Route>
-        </Routes>
-        <Footer></Footer>
+              <Route
+                path="productdetails/:id"
+                element={
+                  <PrivateRoute>
+                    <ProductDetails />
+                  </PrivateRoute>
+                }
+              ></Route>
+              <Route
+                path="pay"
+                element={
+                  <PrivateRoute>
+                    <Pay />
+                  </PrivateRoute>
+                }
+              ></Route>
+              <Route path="*" element={<NotFound />}></Route>
+            </Routes>
+          </div>
+          <Footer></Footer>
+        </div>
       </BrowserRouter>
     </AuthProvider>
   );
