@@ -1,13 +1,11 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import axios from "axios";
-import useAuth from "../AuthProvider/useAuth";
 import { ToastContainer, toast, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
 import { Spinner } from "react-bootstrap";
 
 const CheckoutForm = ({ price, data, loadData }) => {
-  const { user } = useAuth();
   const stripe = useStripe();
   const elements = useElements();
   const [wait, setWait] = useState(false);
@@ -17,21 +15,17 @@ const CheckoutForm = ({ price, data, loadData }) => {
     e.preventDefault();
     setWait(true);
 
-    /* Validating required info */
     if (!stripe || !elements) {
-      return setWait(false);
-    }
-    const card = elements.getElement(CardElement);
-    if (card == null) {
       return setWait(false);
     }
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
-      card,
+      card: elements.getElement(CardElement),
     });
     if (error) {
       setWait(false);
-      return toast.error(error, {
+      console.log(error.message);
+      return toast.error(error.message, {
         position: "top-center",
         autoClose: 3000,
         hideProgressBar: true,
@@ -43,70 +37,43 @@ const CheckoutForm = ({ price, data, loadData }) => {
         progress: undefined,
       });
     }
+    const { id } = paymentMethod;
 
-    /* Payment Process Start*/
-    axios
-      .post("https://gpushop.herokuapp.com/create-payment-intent", { price })
-      .then(async (res) => {
-        const { paymentIntent, error } = await stripe.confirmCardPayment(
-          res.data.clientSecret,
-          {
-            payment_method: {
-              card: card,
-              billing_details: {
-                email: user.email,
-              },
-            },
-          }
-        );
-        if (error) {
-          setWait(false);
-          return toast.error(error, {
-            position: "top-center",
-            autoClose: 3000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            theme: "colored",
-            transition: Slide,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-          });
-        } else {
-          /* Save to DB  */
-          const saveToDb = () => {
-            let newData = [];
-            data.forEach((singleData) => {
-              singleData.paid = "yes";
-              singleData.secret = paymentIntent.client_secret;
-              singleData.paymentmethod = paymentIntent.payment_method;
-              newData.push(singleData);
-            });
-            axios
-              .post("https://gpushop.herokuapp.com/placeorder", newData)
-              .then((res) => {
-                if (res.data.acknowledged) {
-                  loadData();
-                  setWait(false);
-                  toast.success("Order Placed Successfully", {
-                    position: "top-center",
-                    autoClose: 3000,
-                    hideProgressBar: true,
-                    closeOnClick: true,
-                    theme: "colored",
-                    transition: Slide,
-                    pauseOnHover: false,
-                    draggable: true,
-                    progress: undefined,
-                  });
-                }
-              });
-          };
-          saveToDb();
-        }
+    try {
+      const result = await axios.post(
+        "https://gpushop.herokuapp.com/create-payment-intent",
+        { id, price, data }
+      );
+      if (result.data.deletedCount) {
+        loadData();
+        setWait(false);
+        toast.success("Order Placed Successfully", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          theme: "colored",
+          transition: Slide,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        });
+      }
+    } catch (err) {
+      setWait(false);
+      toast.error(err.message, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        theme: "colored",
+        transition: Slide,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
       });
+    }
   };
-
   /* Payment function End */
 
   return (
