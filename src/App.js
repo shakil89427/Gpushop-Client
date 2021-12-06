@@ -3,7 +3,7 @@ import "./App.css";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Home from "./components/Home/Home";
 import ProductDetails from "./components/ProductDetails/ProductDetails";
-import Pay from "./components/Pay/Pay";
+import Cart from "./components/Cart/Cart";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
@@ -92,10 +92,10 @@ function App() {
                 }
               ></Route>
               <Route
-                path="pay"
+                path="cart"
                 element={
                   <PrivateRoute>
-                    <Pay />
+                    <Cart />
                   </PrivateRoute>
                 }
               ></Route>

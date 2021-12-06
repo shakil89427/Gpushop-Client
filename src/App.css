@@ -47,3 +47,14 @@ i:hover {
 .laitest {
   height: 350px;
 }
+/* Chrome, Safari, Edge, Opera */
+.quantity::-webkit-outer-spin-button,
+.quantity::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.quantity[type="number"] {
+  -moz-appearance: textfield;
+}

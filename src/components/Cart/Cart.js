@@ -5,11 +5,8 @@ import { NavLink } from "react-router-dom";
 import useAuth from "../AuthProvider/useAuth";
 import { ToastContainer, toast, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { loadStripe } from "@stripe/stripe-js";
-import { Elements } from "@stripe/react-stripe-js";
-import CheckoutForm from "./CheckoutForm";
-
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PROMISE_KEY);
+import StripeCheckout from "react-stripe-checkout";
+import logo from "../../images/headerLogo.png";
 
 const Pay = () => {
   const [products, setProducts] = useState([]);
@@ -17,6 +14,15 @@ const Pay = () => {
   const [price, setprice] = useState();
   const { user } = useAuth();
   const [dataLoading, setdataLoading] = useState(false);
+
+  const payNow = (token) => {
+    if (!token) {
+      return;
+    }
+    axios
+      .post("http://localhost:5000/payment", { token, price })
+      .then((res) => console.log(res));
+  };
 
   /* Data Load Function */
   const loadData = () => {
@@ -129,9 +135,13 @@ const Pay = () => {
           ))}
         </div>
         <div className="col-12 col-md-4 col-lg-4 text-center py-5">
-          <Elements stripe={stripePromise}>
-            <CheckoutForm loadData={loadData} price={price} data={data} />
-          </Elements>
+          <StripeCheckout
+            stripeKey={process.env.REACT_APP_STRIPE_PROMISE_KEY}
+            token={payNow}
+            name="GpuShop"
+            image={logo}
+            amount={price * 100}
+          ></StripeCheckout>
         </div>
       </div>
     </div>
