@@ -39,8 +39,9 @@ const ProductDetails = () => {
     setWait(true);
     const userId = user.uid;
     product.quantity = quantity;
+    product.userId = userId;
     axios
-      .post("http://localhost:5000/addtocart", { userId, product })
+      .post("https://gpushop.herokuapp.com/addtocart", { userId, product })
       .then((res) => {
         if (res.data.acknowledged) {
           setWait("done");

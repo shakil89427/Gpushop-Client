@@ -10,18 +10,39 @@ import logo from "../../images/headerLogo.png";
 
 const Pay = () => {
   const [products, setProducts] = useState([]);
-  const [data, setdata] = useState();
   const [price, setprice] = useState();
+  const [quantity, setQuantity] = useState();
   const { user } = useAuth();
   const [dataLoading, setdataLoading] = useState(false);
+  const [wait, setWait] = useState(false);
 
-  const payNow = (token) => {
+  /* Payment Function */
+  const payNow = async (token) => {
+    setWait(true);
     if (!token) {
-      return;
+      return setWait(false);
     }
-    axios
-      .post("http://localhost:5000/payment", { token, price })
-      .then((res) => console.log(res));
+    const { _id, ...rest } = user;
+    rest.products = products;
+    const result = await axios.post("https://gpushop.herokuapp.com/payment", {
+      token,
+      price,
+      rest,
+    });
+    if (result.data.acknowledged) {
+      loadData();
+      toast.success("Order Placed Successfully", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        theme: "colored",
+        transition: Slide,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      });
+    }
   };
 
   /* Data Load Function */
@@ -40,30 +61,18 @@ const Pay = () => {
 
   /* Calculate Function */
   const calculate = () => {
-    let gprice = 0;
+    let totalPrice = 0;
+    let totalProducts = 0;
     for (const product of products) {
       const newprice = product.price * product.quantity;
-      gprice = gprice + newprice;
+      totalPrice = totalPrice + newprice;
+      totalProducts = totalProducts + product.quantity;
     }
-    setprice(gprice);
+    setprice(totalPrice);
+    setQuantity(totalProducts);
   };
   useEffect(() => {
     calculate();
-  }, [products]);
-
-  /* Order Modify Function */
-  const modify = () => {
-    const newdata = [];
-    products.forEach((product) => {
-      const { _id, ...rest } = product;
-      rest.useremail = user.email;
-      rest.status = "pending";
-      newdata.push(rest);
-    });
-    setdata(newdata);
-  };
-  useEffect(() => {
-    modify();
   }, [products]);
 
   /*   Remove From Cart */
@@ -114,34 +123,51 @@ const Pay = () => {
               </NavLink>
             </p>
           )}
-          {products.map((product) => (
-            <div
-              key={product._id}
-              className="border-bottom d-flex flex-column flex-lg-row align-items-center"
-            >
-              <img className="w-25" src={product.img} alt="" />
-              <div className="ms-2">
-                <h5>{product.name}</h5>
-                <h6>Quantity: {product.quantity}</h6>
-                <h6>Price: ${product.price}</h6>
+          {products &&
+            products.map((product) => (
+              <div
+                key={product._id}
+                className="shadow mb-2 p-2 d-flex  align-items-center justify-content-between"
+              >
+                <div className="p-2 d-flex align-items-center">
+                  <img
+                    style={{ width: "200px", height: "200px" }}
+                    className="p-3"
+                    src={product.img}
+                    alt=""
+                  />
+                  <div className="ms-2">
+                    <h6>{product.name}</h6>
+                    <p className="m-0 mb-2">Price: ${product.price}</p>
+                    <p>Quantity: {product.quantity}</p>
+                  </div>
+                </div>
                 <button
                   onClick={() => remove(product._id)}
-                  className="m-1 mb-3 border-0 rounded bg-dark text-white px-3 py-1"
+                  className="border-0 rounded bg-dark text-white px-2"
                 >
-                  Remove
+                  X
                 </button>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
         <div className="col-12 col-md-4 col-lg-4 text-center py-5">
+          <h5>Total Items {quantity}</h5>
+          <h5>Total Price: ${price}</h5>
           <StripeCheckout
             stripeKey={process.env.REACT_APP_STRIPE_PROMISE_KEY}
             token={payNow}
             name="GpuShop"
             image={logo}
             amount={price * 100}
-          ></StripeCheckout>
+          >
+            <button
+              disabled={wait}
+              className="my-1 mb-3 border-0 rounded bg-dark text-white px-3 py-1"
+            >
+              Proceed to Pay
+            </button>
+          </StripeCheckout>
         </div>
       </div>
     </div>
